@@ -1,0 +1,107 @@
+<div class="container">
+    <h1>Order Form</h1>
+    <form action="" id="checkout-form">
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address">
+        </div>
+        <div class="mb-3">
+            <label for="pincode" class="form-label">Pincode</label>
+            <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Enter pincode">
+        </div>
+        <div class="mb-3">
+            <label for="mobile" class="form-label">Mobile Number</label>
+            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter mobile number">
+            <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+        </div>
+        <div class="mb-3">
+
+            <h5>Total Amount :{{total}} Rs</h5>
+        </div>
+        <div class="mb-3">
+            <label for="paymentMethod" class="form-label">Payment Method</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" value="cod">
+                <label class="form-check-label">Cash on Delivery (COD)</label>
+            </div>
+            <div class="form-check">
+
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="paymentMethod" value="online">
+                    Online Payment</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Check out</button>
+    </form>
+</div>
+
+<script>
+    $("#checkout-form").submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/place-order',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                alert(response)
+                if (response.codSuccess) {
+                    location.href = '/order-success'
+                } else {
+                    razorpayPayment(response)
+                }
+
+            }
+        })
+    })
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_KHgBj4Fn2XoVfO", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Build It",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature)
+                console.log("payment =>>",response)
+                verifyPayment(response,order)
+            },
+            "prefill": { 
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9000090000"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+ rzp1.open();
+    }
+    function verifyPayment(payment,order){
+        $.ajax({
+            url:"/verifypayment",
+          
+            data:{
+                payment,
+                order
+            },
+            method: 'POST',
+            success:(response)=>{
+                if(response.status)
+                {
+                     location.href = '/order-success'
+                }else{
+                    alert("Payment failed")
+                }
+            }
+            
+        })
+    }
+</script>
