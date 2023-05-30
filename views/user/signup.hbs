@@ -2,11 +2,13 @@
  <div class="container">
       <form class="form form--signup framed" action="/signup" method="POST">
         <h1 class="text text--centered text--omega">Build It</h1>
-        <input type="text" placeholder="First Name" class="input input--top" name="Fname"/>
-        <input type="text" placeholder="Last Name" class="input" name="Lname" />
+        <input type="text" placeholder="Full Name" class="input input--top" name="Fname"/>
         <input type="text" placeholder="username" class="input" name="username" />
         <input type="email" placeholder="Email" class="input "  name="email" />
         <input type="password" placeholder="Password" class="input"  name="Password" />
+        <input type="text"  class="input"  name="bio" value="" hidden />
+        <input type="text" class="input" name="phone" value="" hidden/>
+        <input type="date"  name="dob" value="" hidden/>
         <button type="submit" class="input input--submit">Create Account</button>
         <!-- <input type="submit" value="Sign up" class="input input--submit" /> -->
         

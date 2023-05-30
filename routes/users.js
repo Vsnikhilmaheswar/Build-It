@@ -40,9 +40,42 @@ router.get('/signup', (req, res) => {
 })
 
 
-router.get('/profile',(req,res)=>{
- res.render('user/profile')
+router.get('/profile', async(req,res)=>{
+
+  let user = req.session.user
+  console.log("user id",req.session.user._id);
+ let userData=await userHelper.getUserDetails(req.session.user._id)
+ res.render('user/profile',{userData,user})
 })
+
+
+
+router.get('/edit-profile/:id',async(req,res)=>{
+console.log(req.params.id)
+let user = req.session.user
+  let userData=await userHelper.getUserDetails(req.session.user._id)
+  //console.log(product)
+  res.render('user/edit-profile',{userData,user})
+})
+
+
+
+router.post('/edit-profile/:id',(req,res)=>{
+  let id = req.params.id
+  console.log("id  "+id);
+  userHelper.editProfile(req.params.id,req.body).then(()=>{
+    res.redirect('/profile')
+    
+    if(req.files.Image)
+    {
+      let image=req.files.Image
+      image.mv('./public/images/userimg/' + id + '.jpg')
+      
+    }   
+  })
+})
+
+
 
 router.post('/signup', (req, res) => {
   userHelper.doSignup(req.body).then((response) => {

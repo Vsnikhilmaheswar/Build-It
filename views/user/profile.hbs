@@ -1,1 +1,129 @@
-<h1>hello user</h1>
+<body>
+    <div class="container container-1">
+        <!--navbar contents-->
+        {{!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Build It</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="profile.html">Profile</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2 search-bar" type="search" placeholder="Search"
+                            aria-label="Search">
+                        <button class="btn btn-color" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav> --}}
+
+        <!--navbar contents-->
+
+        <div class="container container-2">
+            <div class="row">
+                <div class="col-md-3 card" style="margin-top: 30px;">
+                    <div class="card-header" style="font-size: x-large;">Profile Photo</div>
+                    <div class="col-md-4 profile-image">
+
+                        <img src="/images/userimg/{{userData._id}}.jpg" class="rounded-circle"
+                            style="width: 150px;" alt="Avatar" />
+                        <div class="col-md-4">
+                            <a class="btn profile-btn" href="#" role="button" style="width: 200px;">Log out</a>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="col-md-8 profile-labels">
+                    <div class="card col-md-12">
+                        <div class="card-header" style=>Account Details</div>
+                        <div class="card-body">
+                            <div class="row ">
+                                <div class="col-md-5">
+                                    <label>User Id</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <p>{{userData.username}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <p>{{userData.Fname}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <p>{{userData.email}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label>Phone</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <p>{{userData.phone}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label>Bio</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <p>{{userData.bio}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" row ">
+                        <div class="col-md-5">
+                              <a href="/edit-profile/{{userData._id}}" class="btn profile-btn">Edit</a>
+                        </div>
+                        <div class="col-md-5 ">
+                            <a class="btn profile-btn" href="changepassword.html" role="button">Change Password</a>
+                        </div>
+
+
+                        <div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            {{!--
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+                integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+                crossorigin="anonymous"></script> --}}
+</body>

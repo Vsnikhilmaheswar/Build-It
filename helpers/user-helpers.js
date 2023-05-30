@@ -320,5 +320,37 @@ module.exports = {
     }).then(() => {
       resolve()
     })
-  }
+  },
+
+
+
+
+
+
+  getUserDetails:(userId)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)}).then((user)=>{
+            resolve(user)
+        })
+    })
+},
+
+
+
+editProfile:(userId,userDetails)=>{
+  return new Promise((resolve,reject)=>{
+      db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{
+          $set:{
+              Fname:userDetails.Fname,
+              username:userDetails.username,
+              email:userDetails.email,
+              bio:userDetails.bio,
+              phone:userDetails.phone,
+              dob:userDetails.dob
+          }
+      }).then((users)=>{
+        resolve()  
+      })
+  })
+}
 }

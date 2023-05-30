@@ -1,0 +1,100 @@
+.container-1
+{
+    background-color: rgba(239, 151, 47, 1);
+    height: 1500px;
+}
+.navbar
+{
+    height: 55px;
+    width: 100%;
+}
+.navbar-brand
+{
+    font-size: 40PX;
+    color: rgba(239, 151, 47, 1);
+
+}
+.nav-item
+{
+    margin-top: 9px;
+    margin-left: 23px;
+    font-size: 25px;  
+}
+.nav-link
+{
+    color:rgba(239, 151, 47, 1);
+}
+.search-bar
+{
+border-color:rgba(239, 151, 47, 1);;
+border: 4;
+}
+.btn
+{
+    color: rgb(255, 255, 255);
+        border-color:rgba(239, 151, 47, 1);
+        background-color: rgba(239, 151, 47, 1);;
+
+    }
+
+    .container-2
+{
+    background-color: rgb(255, 255, 255);
+    height: 800px;
+    margin-top: 15px;
+}
+
+.div-1
+{width: 1300px;
+    height: 351px;
+   
+}
+.top-content
+{
+    font-size: 100px;
+    color: white;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+    text-decoration: none;
+    margin-left: 20px;
+    
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+.top-subcontent
+{
+
+    color: white;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+    text-decoration: none;
+    margin-left: 19px;
+    font-size: x-large;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    margin-top: -34px;
+
+}
+
+.line
+{
+    color: rgba(239, 151, 47, 1);
+}
+.profile-image
+{
+    margin-top: 30px;
+    
+}
+
+.profile-labels
+{
+    margin-top: 30px;
+    
+}
+.profile-btn
+{
+    
+   
+    margin-top: 40px;
+    
+}

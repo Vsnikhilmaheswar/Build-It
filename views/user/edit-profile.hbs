@@ -1,0 +1,92 @@
+<div class="container container-1">
+    <div class="container-xl px-4 mt-4">
+
+        <hr class="mt-0 mb-4">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <form action="/edit-profile/{{userData._id}}" method="POST" enctype="multipart/form-data">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" style="width:300px;height:auto"
+                            src="/images/userimg/{{userData._id}}.jpg" alt="" id="imgView">
+                        <!-- Profile picture help block-->
+
+                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                        <!-- Profile picture upload button-->
+                        <input type="file" name="Image" class="form-control" onchange="viewImage(event)">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                    <div class="card-body">
+                        
+                            <!-- Form Group (username)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" >Username (how your name will appear to
+                                    other users on the site)</label>
+                                <input class="form-control" name="username" type="text"
+                                    placeholder="Enter your username" value="{{userData.username}}">
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" >Full name</label>
+                                    <input class="form-control" name="Fname" type="text"
+                                        placeholder="Enter your full name" value="{{userData.Fname}}">
+                                </div>
+                                <!-- Form Group (last name)-->
+
+                            </div>
+
+
+                            <!-- Form Group (email address)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" >Email address</label>
+                                <input class="form-control" name="email" type="email"
+                                    placeholder="Enter your email address" value="{{userData.email}}">
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" >Phone number</label>
+                                    <input class="form-control" name="phone" type="text"
+                                        placeholder="Enter your phone number" value="{{userData.phone}}">
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" >Birthday</label>
+                                    <input class="form-control"  type="date" name="dob"
+                                        placeholder="Enter your birthday" value="{{userData.dob}}">
+                                </div>
+                            </div>
+                            <!-- Form Group (email address)-->
+                            <div class="mb-3">
+                                <label class="small mb-1">Bio</label>
+                                <input class="form-control" type="text" placeholder="Discription" name="bio"
+                                    value="{{userData.bio}}">
+                            </div>
+                            <!-- Save changes button-->
+                            <button class="btn btn-primary" type="submit">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+    }
+</script>
