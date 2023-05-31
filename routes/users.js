@@ -40,7 +40,7 @@ router.get('/signup', (req, res) => {
 })
 
 
-router.get('/profile', async(req,res)=>{
+router.get('/profile',verifyLogin, async(req,res)=>{
 
   let user = req.session.user
   console.log("user id",req.session.user._id);
@@ -160,8 +160,10 @@ router.get('/order-success', (req, res) => {
   res.render('user/order-success', { user: req.session.user })
 })
 
-router.get('/orders', (req, res) => {
-  res.render('user/orders', { user: req.session.user })
+router.get('/orders',verifyLogin,async (req, res) => {
+ let orders=await userHelpers.viewOrderDetails(req.session.user._id)
+ console.log(orders)
+  res.render('user/orders', { orders,user: req.session.user })
 })
 
 router.post("/verifypayment", (req, res) => {

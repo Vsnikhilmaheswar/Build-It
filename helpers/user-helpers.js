@@ -155,6 +155,52 @@ module.exports = {
       resolve(cartItems)
     })
   },
+
+  viewOrderDetails: (userID) => {
+    return new Promise(async (resolve, reject) => {
+      let cartItems = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+        {
+          $match: { userId: objectId(userID) }
+        },
+        {
+          $unwind: '$products'
+        },
+      
+        {
+          $project: {
+            item: '$products.item',
+            quantity: '$products.quantity'
+          }
+        },
+        {
+          $unwind:'$deliveryDetails'
+        },
+        {
+          $project:{
+address:'$deliveryDetails.address',
+
+          }
+        },
+        {
+          $lookup: {
+            from: collection.PRODUCT_COLLECTION,
+            localField: 'item',
+            foreignField: '_id',
+            as: 'product'
+          }
+        }, {
+          $project: {
+            item: 1, address:1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+          }
+        }
+
+      ]).toArray()
+      //console.log(cartItems[0].products);
+      resolve(cartItems)
+    })
+  },
+
+
   getCartCount: (userId) => {
     return new Promise(async (resolve, reject) => {
       let count = 0
@@ -352,5 +398,6 @@ editProfile:(userId,userDetails)=>{
         resolve()  
       })
   })
-}
+},
+ 
 }
