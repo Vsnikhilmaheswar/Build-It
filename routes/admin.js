@@ -69,13 +69,11 @@ router.post('/add-product', (req, res) => {
   });
 })
 
-
-
 router.get('/delete-product/:id',(req,res) => {
   var proId = req.params.id
   console.log(proId);
   productHelpers.delectProduct(proId).then((response) => {
-    res.redirect('/admin/')
+    res.redirect('/admin/dashboard')
   })
 })
 
@@ -88,7 +86,7 @@ router.get('/edit-product/:id',async(req,res)=>{
 router.post('/edit-product/:id',(req,res)=>{
   let id = req.params.id
   productHelpers.updateProduct(req.params.id,req.body).then(()=>{
-    res.redirect('/admin')
+    res.redirect('admin/view-products')
     
     if(req.files.Image)
     {
