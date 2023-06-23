@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var AdminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
+var contractorRouter = require('./routes/contractor');
 var hbs = require('express-handlebars');
 var app = express();
 var fileUpload = require('express-fileupload');
@@ -32,6 +33,7 @@ db.connect((err) => {
 
 app.use('/', usersRouter);
 app.use('/admin', AdminRouter);
+app.use('/c',contractorRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
