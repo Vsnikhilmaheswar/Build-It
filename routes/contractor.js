@@ -13,7 +13,7 @@ var router = express.Router();
   router.post('/addworker', (req, res) => {
    constructorHelper.addproduct(req.body, (id) => {
      console.log(id)
-     res.render("contractors/addworker")
+     res.redirect('/c/addworker')
    });
  })
 
@@ -36,4 +36,23 @@ var router = express.Router();
       res.redirect('/c')
     })
   })
+
+  router.get('/delworker/:id', async (req, res) => {
+
+      const workerId = req.params.id;
+      try
+      {
+        await constructorHelper.deleteWorker(workerId);
+        res.redirect('/c/viewworker');
+      } 
+    catch (error) {
+      // Handle error appropriately
+      console.error(error);
+      res.redirect('/c');
+    }
+  });
+  
+
+  
+
 module.exports = router;

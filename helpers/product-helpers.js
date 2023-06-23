@@ -18,15 +18,18 @@ module.exports = {
             resolve(product)
         })
     },
-    delectProduct:(proId)=>{
-        return new Promise((resolve,reject)=>{
-            console.log(objectId(proId));
-            db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({_id:objectId(proId)}).then((response)=>{
-              // console.log(response);
-                resolve(response)
+    deleteWorker: (workerId) => {
+        return new Promise((resolve, reject) => {
+          db.get().collection(collection.WORKER_COLLECTION).deleteOne({ _id: objectId(workerId) })
+            .then((response) => {
+              resolve(response);
             })
-        })
-    },
+            .catch((error) => {
+              reject(error);
+            });
+        });
+      }
+      ,
     getProductDetails:(proId)=>{
         return new Promise((resolve,reject)=>{
             db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(proId)}).then((product)=>{

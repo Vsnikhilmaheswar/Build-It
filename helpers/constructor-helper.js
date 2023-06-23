@@ -43,5 +43,17 @@ module.exports = {
               resolve()  
             })
         })
-    }
+    }, 
+    deleteWorker: (workerId) => {
+        return new Promise((resolve, reject) => {
+          db.get().collection(collection.WORKER_COLLECTION).deleteOne({ _id: objectId(workerId) })
+            .then((result) => {
+              resolve(result.deletedCount);
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        });
+      }
+      
 }
