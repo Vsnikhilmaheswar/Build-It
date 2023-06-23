@@ -24,6 +24,20 @@ module.exports = {
       }
     });
   },
+
+  doAdminSignup: (userData) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        userData.Password = await bcrypt.hash(userData.Password, 10);
+        db.get().collection('admin').insertOne(userData).then((data) => {
+          resolve(data.ops[0]);
+        });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
+
   doLogin: (userData) => {
     return new Promise(async (resolve, reject) => {
       let loginStatus = false
@@ -50,13 +64,23 @@ module.exports = {
     })
   },
 
+GetProduct:(category)=>{
+  return new Promise(async(resolve,reject)=>{
+    let products=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:category}).toArray()
+    resolve(products)
+  
+})
+},
+
+
+
   //  admin login
 
   doALogin: (userData) => {
     return new Promise(async (resolve, reject) => {
       let loginStatus = false
       let response = {}
-      let admin = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
+      let admin = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ email: userData.email })
       if (admin) {
         bcrypt.compare(userData.Password, admin.Password).then((status) => {
           if (status) {
@@ -157,48 +181,14 @@ module.exports = {
   },
 
   viewOrderDetails: (userID) => {
-    return new Promise(async (resolve, reject) => {
-      let cartItems = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
-        {
-          $match: { userId: objectId(userID) }
-        },
-        {
-          $unwind: '$products'
-        },
-      
-        {
-          $project: {
-            item: '$products.item',
-            quantity: '$products.quantity'
-          }
-        },
-        {
-          $unwind:'$deliveryDetails'
-        },
-        {
-          $project:{
-address:'$deliveryDetails.address',
-
-          }
-        },
-        {
-          $lookup: {
-            from: collection.PRODUCT_COLLECTION,
-            localField: 'item',
-            foreignField: '_id',
-            as: 'product'
-          }
-        }, {
-          $project: {
-            item: 1, address:1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-          }
-        }
-
-      ]).toArray()
-      //console.log(cartItems[0].products);
-      resolve(cartItems)
-    })
-  },
+  return new Promise(async (resolve, reject) => {
+  let orderDetails = await db.get().collection(collection.ORDER_COLLECTION).find({userId:objectId(userID)}).toArray()
+  console.log(orderDetails);
+  resolve(orderDetails)
+    }
+      )
+    },
+  
 
 
   getCartCount: (userId) => {

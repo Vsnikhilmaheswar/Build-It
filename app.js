@@ -27,7 +27,7 @@ app.use(session({secret:"key",cookie:{maxAge:6000000}}))
 
 db.connect((err) => {
   if (err) console.log("connection error" + err);
-  else console.log("!! DataBase Connected !!");
+  else console.log("!!!!!!!DATABASE CONNECTED!!!!!!");
 });
 
 app.use('/', usersRouter);

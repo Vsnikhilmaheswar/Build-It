@@ -31,7 +31,7 @@ router.post('/login', (req, res) => {
     }
   });
 });
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard',verifyLogin,(req,res)=>{
   let admin = req.session.admin
   producthelper.getAllProducts().then((products) => {
     //console.log(products)
@@ -39,8 +39,18 @@ router.get('/dashboard',(req,res)=>{
   })
 })
 
+
+
+router.get('/alluser', function (req, res) {
+  producthelper.getAllUser().then((users) => {
+  console.log(users)
+    res.render('admin/alluser', { users })
+  })
+})
+
 router.get('/add-product', function (req, res) {
-  res.render('admin/add-product')
+
+  res.render('admin/add-product',{ admin : req.session.admin})
 })
 
 router.post('/add-product', (req, res) => {
@@ -56,9 +66,10 @@ router.post('/add-product', (req, res) => {
         console.log(err);
       }
     })
-
   });
 })
+
+
 
 router.get('/delete-product/:id',(req,res) => {
   var proId = req.params.id
@@ -85,6 +96,22 @@ router.post('/edit-product/:id',(req,res)=>{
       image.mv('./public/images/' + id + '.jpg')
       
     }
+  })
+})
+
+
+router.get('/Adminsignup', (req, res) => {
+  res.render('admin/Adminsignup')
+})
+
+
+router.post('/Adminsignup', (req, res) => {
+  userHelpers.
+  doAdminSignup(req.body).then((response) => {
+    console.log(response);
+    req.session.admin = response
+    req.session.admin.loggedIn = true
+    res.redirect('/')
   })
 })
 module.exports = router;

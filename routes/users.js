@@ -5,10 +5,12 @@ var userHelper = require('../helpers/user-helpers');
 const { route } = require('./admin');
 const { USER_COLLECTION } = require('../config/collections');
 const userHelpers = require('../helpers/user-helpers');
+const async = require('hbs/lib/async');
 const verifyLogin = (req, res, next) => {
-  if (req.session.user.loggedIn) {
+  if (req.session.user) {
     next()
   } else {
+    req.session.user = false
     res.redirect('/login')
   }
 }
@@ -95,6 +97,7 @@ router.post('/login', (req, res) => {
       res.redirect('/')
     } else {
       req.session.userLoginErr = "invalid username or password"
+      req.session.user.loggedIn = false
       res.redirect('/login')
 
     }
@@ -102,6 +105,7 @@ router.post('/login', (req, res) => {
 })
 router.get('/logout', (req, res) => {
   req.session.user=null
+  req.session.user.loggedIn = false
   res.redirect('/')
 })
 router.get('/cart', verifyLogin, async (req, res) => {
@@ -115,10 +119,15 @@ router.get('/cart', verifyLogin, async (req, res) => {
 })
 
 router.get('/add-to-cart/:id', (req, res) => {
+  if (req.session.user) {
   userHelper.addToCart(req.params.id, req.session.user._id).then(() => {
-    //res.redirect('/');
+   
     res.json({ 'status': true })
   })
+}else{
+   //res.redirect('/');
+  res.json({ 'status': false })
+}
 }
 )
 
@@ -162,7 +171,7 @@ router.get('/order-success', (req, res) => {
 
 router.get('/orders',verifyLogin,async (req, res) => {
  let orders=await userHelpers.viewOrderDetails(req.session.user._id)
- console.log(orders)
+
   res.render('user/orders', { orders,user: req.session.user })
 })
 
@@ -178,5 +187,30 @@ router.post("/verifypayment", (req, res) => {
     console.log(err);
     res.json({status:false,errMsg:''})
   })
+
 })
+
+router.get('/bricks', async(req, res) => {
+  let products = await userHelper.GetProduct("bricks")
+  let cartCount = null
+  if (req.session.user) {
+    cartCount = await userHelper.getCartCount(req.session.user._id)
+  }
+  res.render('user/bricks',{products,user:req.session.user,cartCount})});
+
+
+// admin creation temporary code
+// router.get('/Adminsignup', (req, res) => {
+//   res.render('user/Adminsignup')
+// })
+
+
+// router.post('/Adminsignup', (req, res) => {
+//   userHelpers.doAdminSignup(req.body).then((response) => {
+//     console.log(response);
+//     req.session.admin = response
+//     req.session.admin.loggedIn = true
+//     res.redirect('/admin/login')
+//   })
+// })
 module.exports = router;
