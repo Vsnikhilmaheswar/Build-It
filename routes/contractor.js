@@ -69,19 +69,29 @@ var router = express.Router();
   })
 
   router.get('/clogin', (req, res) => {
-    res.render('contractors/clogin')
+    if (req.session.user) {
+      res.redirect('/');
+    } else {
+      res.render('contractors/clogin', { "loginErr": req.session.userLoginErr })
+      req.session.userLoginErr = false
+    }
   })
-
+  
   router.post('/clogin', (req, res) => {
-    constructorHelper.login(req.body).then((user) => {
-      req.session.user = user;
-      req.session.user.loggedIn = true;
-      res.redirect('/c/viewworker');
-    }).catch((error) => {
-      console.log(error);
-      res.redirect('/c/clogin');
-    });
-  });
+    constructorHelper.doconLogin(req.body).then((response) => {
+      if (response.status) {
+       
+        req.session.user = response.user
+       // req.session.user.loggedIn = true
+        res.redirect('/c/viewworker')
+      } else {
+        req.session.userLoginErr = "invalid username or password"
+        res.redirect('/login')
+  
+      }
+    })
+  })
+  
 
   
 module.exports = router;
