@@ -6,13 +6,24 @@ var objectId = require('mongodb').ObjectID
 const bcrypt = require('bcrypt');
 module.exports = {
 
-    addproduct:(product,callback) => {
-        console.log(product);
-        db.get().collection('worker').insertOne(product).then((data) => {
-           // console.log(data);
-            callback(data.ops[0]._id)
-        })
-    },
+  addproduct: (contractorId, workerData, callback) => {
+    const worker = {
+      fName: workerData.fName,
+      lName: workerData.lName,
+      jobLocation: workerData.jobLocation,
+      address: workerData.address,
+      YOE: workerData.YOE,
+      qualification: workerData.qualification,
+      email: workerData.email,
+      Phone: workerData.Phone,
+      additionalinfo: workerData.additionalinfo,
+      contractorId: contractorId
+    };
+  
+    db.get().collection('worker').insertOne(worker).then((data) => {
+      callback(data.ops[0]._id);
+    });
+  },
     getAllProducts:()=>{
         return new Promise(async(resolve,reject)=>{
             let product=await db.get().collection(collection.WORKER_COLLECTION).find().toArray()

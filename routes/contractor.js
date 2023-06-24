@@ -14,11 +14,11 @@ var router = express.Router();
     res.render('contractors/addworker')
   })
   router.post('/addworker', (req, res) => {
-   constructorHelper.addproduct(req.body, (id) => {
-     console.log(id)
-     res.redirect('/c/addworker')
-   });
- })
+    const contractorId = req.session.admin._id; // Assuming the contractor's _id is stored in req.session.admin._id
+    constructorHelper.addproduct(contractorId, req.body, (workerId) => {
+      res.redirect('/c/viewworker');
+    });
+  });
 
  router.get('/viewworker',(req,res)=>{
     constructorHelper.getAllProducts().then((products) => {
