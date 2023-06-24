@@ -70,4 +70,29 @@ module.exports = {
           }
         });
       },
+      doCLogin: (userData) => {
+        return new Promise(async (resolve, reject) => {
+          let loginStatus = false
+          let response = {}
+          let admin = await db.get().collection('contractor').findOne({ email: userData.email })
+          if (admin) {
+            bcrypt.compare(userData.Password, admin.Password).then((status) => {
+              if (status) {
+                console.log("admin login success");
+                response.admin = admin
+                response.status = true
+                resolve(response)
+              } else {
+                console.log("login failed");
+                resolve({ status: false })
+              }
+    
+            })
+          } else {
+            console.log("login failed");
+            resolve({ status: false })
+    
+          }
+        })
+      },
 }

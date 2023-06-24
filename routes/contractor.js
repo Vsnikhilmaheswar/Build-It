@@ -71,4 +71,17 @@ var router = express.Router();
     })
   })
 
+  router.post('/clogin', (req, res) => {
+    constructorHelper.doCLogin(req.body).then((response) => {
+      if (response.status) {
+        req.session.admin = response.admin;
+        req.session.admin.loggedIn = true;
+        res.redirect('/c/viewworker');
+      } else {
+        req.session.adminLoginErr = "Invalid username or password";
+        res.redirect('/c');
+      }
+    });
+  });
+
 module.exports = router;
