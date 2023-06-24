@@ -3,41 +3,41 @@ const constructorHelper = require('../helpers/constructor-helper');
 var router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render("contractors/clogin");
+  res.render("contractors/clogin"); // Render contractor login page
 });
 
 router.post('/landing', (req, res) => {
-  res.render("contractors/landing");
+  res.render("contractors/landing"); // Render landing page after form submission
 });
 
 router.get('/addworker', function (req, res) {
-  res.render('contractors/addworker');
+  res.render('contractors/addworker'); // Render add worker form page
 });
 
 router.post('/addworker', (req, res) => {
-  const contractorId = req.session.admin._id; // Assuming the contractor's _id is stored in req.session.admin._id
+  const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
   constructorHelper.addproduct(contractorId, req.body, (workerId) => {
-    res.redirect('/c/viewmine');
+    res.redirect('/c/viewmine'); // After adding a worker, redirect to the viewmine page
   });
 });
 
 router.get('/editworker/:id', async (req, res) => {
   let product = await constructorHelper.getProductDetails(req.params.id);
   console.log(product);
-  res.render('contractors/editworker', { product });
+  res.render('contractors/editworker', { product }); // Render edit worker form page with worker details
 });
 
 router.post('/editworker/:id', (req, res) => {
   constructorHelper.updateProduct(req.params.id, req.body).then(() => {
-    res.redirect('/c/viewmine');
+    res.redirect('/c/viewmine'); // After editing a worker, redirect to the viewmine page
   });
 });
 
 router.get('/delworker/:id', async (req, res) => {
   const workerId = req.params.id;
   try {
-    await constructorHelper.deleteWorker(workerId);
-    res.redirect('/c/viewmine');
+    await constructorHelper.deleteWorker(workerId); // Delete the specified worker
+    res.redirect('/c/viewmine'); // After deleting a worker, redirect to the viewmine page
   } catch (error) {
     // Handle error appropriately
     console.error(error);
@@ -46,7 +46,7 @@ router.get('/delworker/:id', async (req, res) => {
 });
 
 router.get('/csignup', (req, res) => {
-  res.render('contractors/csignup');
+  res.render('contractors/csignup'); // Render contractor signup form page
 });
 
 router.post('/csignup', (req, res) => {
@@ -54,7 +54,7 @@ router.post('/csignup', (req, res) => {
     console.log(response);
     req.session.user = response;
     req.session.user.loggedIn = true;
-    res.redirect('/c/csignup');
+    res.redirect('/c/csignup'); // After contractor signup, redirect to contractor signup page
   });
 });
 
@@ -63,18 +63,18 @@ router.post('/clogin', (req, res) => {
     if (response.status) {
       req.session.admin = response.admin;
       req.session.admin.loggedIn = true;
-      res.redirect('/c/viewmine');
+      res.redirect('/c/viewmine'); // After contractor login, redirect to the viewmine page
     } else {
       req.session.adminLoginErr = "Invalid username or password";
-      res.redirect('/c');
+      res.redirect('/c'); // If login fails, redirect back to the contractor login page
     }
   });
 });
 
 router.get('/viewmine', (req, res) => {
-  const contractorId = req.session.admin._id; // Assuming the contractor's _id is stored in req.session.admin._id
+  const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
   constructorHelper.getMyWorker(contractorId).then((products) => {
-    res.render('contractors/viewmine', { products });
+    res.render('contractors/viewmine', { products }); // Render the viewmine page with workers specific to the logged-in contractor
   });
 });
 
