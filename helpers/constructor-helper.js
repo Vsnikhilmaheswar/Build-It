@@ -70,16 +70,17 @@ module.exports = {
           }
         });
       },
-      doconLogin: (userData) => {
+
+      doConLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
           let loginStatus = false
           let response = {}
-          let contractor = await db.get().collection(collection.CONTRACTOR_COLLLECTION).findOne({ email: userData.email })
-          if (contractor) {
-            bcrypt.compare(userData.Password, contractor.Password).then((status) => {
+          let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
+          if (user) {
+            bcrypt.compare(userData.Password, user.Password).then((status) => {
               if (status) {
-                console.log("contractor login success");
-                response.contractor = contractor
+                console.log("login success");
+                response.user = user
                 response.status = true
                 resolve(response)
               } else {
@@ -94,5 +95,6 @@ module.exports = {
     
           }
         })
-      }
+      },
+      
 }

@@ -5,8 +5,11 @@ var router = express.Router();
 
 
   router.get('/', (req, res) => {
-      res.render("contractors/landing")
+      res.render("contractors/clogin")
   })
+  router.post('/landing', (req, res) => {
+    res.render("contractors/landing")
+})
   router.get('/addworker', function (req, res) {
     res.render('contractors/addworker')
   })
@@ -70,28 +73,27 @@ var router = express.Router();
 
   router.get('/clogin', (req, res) => {
     if (req.session.user) {
-      res.redirect('/');
+      res.redirect('/c');
     } else {
       res.render('contractors/clogin', { "loginErr": req.session.userLoginErr })
       req.session.userLoginErr = false
     }
   })
-  
-  router.post('/clogin', (req, res) => {
-    constructorHelper.doconLogin(req.body).then((response) => {
+
+  router.post('/login', (req, res) => {
+    constructorHelper.doConLogin(req.body).then((response) => {
       if (response.status) {
        
         req.session.user = response.user
-       // req.session.user.loggedIn = true
-        res.redirect('/c/viewworker')
+        req.session.user.loggedIn = true
+        res.redirect('/')
       } else {
         req.session.userLoginErr = "invalid username or password"
+        req.session.user.loggedIn = false
         res.redirect('/login')
   
       }
     })
   })
-  
-
   
 module.exports = router;
