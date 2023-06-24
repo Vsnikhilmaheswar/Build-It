@@ -67,7 +67,8 @@ var router = express.Router();
       console.log(response);
       req.session.user = response
       req.session.user.loggedIn = true
-      res.redirect('/c')
+      res.redirect('/c/csignup')
     })
   })
+
 module.exports = router;
