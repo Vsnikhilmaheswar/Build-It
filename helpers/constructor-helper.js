@@ -3,6 +3,7 @@ var db=require('../config/connection')
 var collection=require('../config/collections');
 const Collection = require('mongodb/lib/collection');
 var objectId = require('mongodb').ObjectID
+const bcrypt = require('bcrypt');
 module.exports = {
 
     addproduct:(product,callback) => {
@@ -54,6 +55,19 @@ module.exports = {
               reject(error);
             });
         });
-      }
+      },
       
+      //contrtactors      
+      doConSignup: (userData) => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            userData.Password = await bcrypt.hash(userData.Password, 10);
+            db.get().collection('contractor').insertOne(userData).then((data) => {
+              resolve(data.ops[0]);
+            });
+          } catch (err) {
+            reject(err);
+          }
+        });
+      }
 }

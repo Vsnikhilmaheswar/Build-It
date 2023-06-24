@@ -53,6 +53,19 @@ var router = express.Router();
   });
   
 
-  
+  //contractors
 
+  router.get('/csignup', (req, res) => {
+    res.render('contractors/csignup')
+  })
+
+  router.post('/csignup', (req, res) => {
+    constructorHelper.doConSignup(req.body).then((response) => {
+      console.log(response);
+      req.session.user = response
+      req.session.user.loggedIn = true
+      res.redirect('/c')
+    })
+  })
+  
 module.exports = router;
