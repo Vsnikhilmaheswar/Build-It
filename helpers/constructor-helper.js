@@ -106,4 +106,11 @@ module.exports = {
           }
         })
       },
+
+      getMyWorker: (contractorId) => {
+        return new Promise(async (resolve, reject) => {
+          let products = await db.get().collection(collection.WORKER_COLLECTION).find({ contractorId: contractorId }).toArray();
+          resolve(products);
+        });
+      }
 }

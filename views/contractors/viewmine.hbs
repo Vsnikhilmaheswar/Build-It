@@ -1,0 +1,47 @@
+<section>
+  
+  <div class="container">
+    
+    <div class="row mt-5">
+
+ <a href="/c/addworker" class="btn btn-primary">Add worker</a>
+    </div>
+      
+    <table class="table mt-5">
+
+      <thead>
+        <tr>
+          <th scope="col">first name</th>
+          <th scope="col">last name</th>
+          <th scope="col">job location</th>
+          <th scope="col">adress</th>
+          <th scope="col">year of exp</th>
+          <th scope="col">email</th>
+          <th scope="col">phone</th>
+          <th scope="col">qualification</th>
+          <th scope="col">addittional info</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+          <td>{{this.fName}}</td>
+          <td>{{this.lName}}</td>
+          <td>{{this.jobLocation}}</td>
+          <td>{{this.address}}</td>
+          <td>{{this.YOE}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.Phone}}</td>
+          <td>{{this.qualification}}</td>
+          <td>{{this.additionalinfo}}</td>
+          {{!-- <td><img style="width:50px;height:50px" src="/images/{{this._id}}.jpg" alt=""></td> --}}
+          <td>
+            <a href="/c/editworker/{{this._id}}" class="btn btn-primary">Edit</a>
+            <a href="/c/delworker/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are you want to delete {{this.Name}}')]">Delete</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

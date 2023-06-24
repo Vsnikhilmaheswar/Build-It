@@ -16,7 +16,7 @@ var router = express.Router();
   router.post('/addworker', (req, res) => {
     const contractorId = req.session.admin._id; // Assuming the contractor's _id is stored in req.session.admin._id
     constructorHelper.addproduct(contractorId, req.body, (workerId) => {
-      res.redirect('/c/viewworker');
+      res.redirect('/c/viewmine');
     });
   });
 
@@ -76,12 +76,21 @@ var router = express.Router();
       if (response.status) {
         req.session.admin = response.admin;
         req.session.admin.loggedIn = true;
-        res.redirect('/c/viewworker');
+        res.redirect('/c/viewmine');
       } else {
         req.session.adminLoginErr = "Invalid username or password";
         res.redirect('/c');
       }
     });
   });
+
+
+  router.get('/viewmine', (req, res) => {
+    const contractorId = req.session.admin._id; // Assuming the contractor's _id is stored in req.session.admin._id
+    constructorHelper.getMyWorker(contractorId).then((products) => {
+      res.render('contractors/viewmine', { products });
+    });
+  });
+  
 
 module.exports = router;
