@@ -67,5 +67,21 @@ var router = express.Router();
       res.redirect('/c')
     })
   })
+
+  router.get('/clogin', (req, res) => {
+    res.render('contractors/clogin')
+  })
+
+  router.post('/clogin', (req, res) => {
+    constructorHelper.login(req.body).then((user) => {
+      req.session.user = user;
+      req.session.user.loggedIn = true;
+      res.redirect('/c/viewworker');
+    }).catch((error) => {
+      console.log(error);
+      res.redirect('/c/clogin');
+    });
+  });
+
   
 module.exports = router;

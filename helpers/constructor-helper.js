@@ -69,5 +69,33 @@ module.exports = {
             reject(err);
           }
         });
+      },
+      login: (userData) => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            // Retrieve the user from the database by their username or email
+            const user = await db.get().collection('contractor').findOne({
+              $or: [
+                { username: userData.username },
+                { email: userData.username }
+              ]
+            });
+      
+            if (!user) {
+              throw new Error('Invalid username or email');
+            }
+      
+            // Compare the entered password with the stored hashed password
+            const passwordMatch = await bcrypt.compare(userData.password, user.Password);
+      
+            if (!passwordMatch) {
+              throw new Error('Invalid password');
+            }
+      
+            resolve(user);
+          } catch (err) {
+            reject(err);
+          }
+        });
       }
 }
