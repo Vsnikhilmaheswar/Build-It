@@ -199,18 +199,18 @@ router.get('/bricks', async(req, res) => {
   res.render('user/bricks',{products,user:req.session.user,cartCount})});
 
 
-// admin creation temporary code
-// router.get('/Adminsignup', (req, res) => {
-//   res.render('user/Adminsignup')
-// })
+//admin creation temporary code
+router.get('/Adminsignup', (req, res) => {
+  res.render('user/Adminsignup')
+})
 
 
-// router.post('/Adminsignup', (req, res) => {
-//   userHelpers.doAdminSignup(req.body).then((response) => {
-//     console.log(response);
-//     req.session.admin = response
-//     req.session.admin.loggedIn = true
-//     res.redirect('/admin/login')
-//   })
-// })
+router.post('/Adminsignup', (req, res) => {
+  userHelpers.doAdminSignup(req.body).then((response) => {
+    console.log(response);
+    req.session.admin = response
+    req.session.admin.loggedIn = true
+    res.redirect('/admin/login')
+  })
+})
 module.exports = router;
