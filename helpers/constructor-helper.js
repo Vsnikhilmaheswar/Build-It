@@ -17,13 +17,15 @@ module.exports = {
       email: workerData.email,
       Phone: workerData.Phone,
       additionalinfo: workerData.additionalinfo,
-      contractorId: contractorId
+      contractorId: contractorId,
+      flag: false // Set the default value of flag to false
     };
   
     db.get().collection('worker').insertOne(worker).then((data) => {
       callback(data.ops[0]._id);
     });
   },
+  
     getAllProducts:()=>{
         return new Promise(async(resolve,reject)=>{
             let product=await db.get().collection(collection.WORKER_COLLECTION).find().toArray()
@@ -112,5 +114,23 @@ module.exports = {
           let products = await db.get().collection(collection.WORKER_COLLECTION).find({ contractorId: contractorId }).toArray();
           resolve(products);
         });
-      }
+      },
+
+      updateFlag: (contractorId, workerId, flag) => {
+        return new Promise((resolve, reject) => {
+          db.get()
+            .collection(collection.WORKER_COLLECTION)
+            .updateOne(
+              { _id: objectId(workerId), contractorId: contractorId },
+              { $set: { flag: flag } }
+            )
+            .then(() => {
+              resolve();
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        });
+      },
+      
 }

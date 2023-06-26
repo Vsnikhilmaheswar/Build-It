@@ -78,4 +78,20 @@ router.get('/viewmine', (req, res) => {
   });
 });
 
+router.post('/assignflag/:id', (req, res) => {
+  const contractorId = req.session.admin._id;
+  const workerId = req.params.id;
+  constructorHelper.updateFlag(contractorId, workerId, true).then(() => {
+    res.redirect('/c/viewmine');
+  });
+});
+
+router.post('/removeflag/:id', (req, res) => {
+  const contractorId = req.session.admin._id;
+  const workerId = req.params.id;
+  constructorHelper.updateFlag(contractorId, workerId, false).then(() => {
+    res.redirect('/c/viewmine');
+  });
+});
+
 module.exports = router;
