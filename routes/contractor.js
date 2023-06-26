@@ -2,57 +2,80 @@ var express = require('express');
 const constructorHelper = require('../helpers/constructor-helper');
 var router = express.Router();
 
+router.get('/', (req, res) => {
+  res.render("contractors/clogin"); // Render contractor login page
+});
 
+router.post('/landing', (req, res) => {
+  res.render("contractors/landing"); // Render landing page after form submission
+});
 
-  router.get('/', (req, res) => {
-      res.render("contractors/landing")
-  })
-  router.get('/addworker', function (req, res) {
-    res.render('contractors/addworker')
-  })
-  router.post('/addworker', (req, res) => {
-   constructorHelper.addproduct(req.body, (id) => {
-     console.log(id)
-     res.redirect('/c/addworker')
-   });
- })
+router.get('/addworker', function (req, res) {
+  res.render('contractors/addworker'); // Render add worker form page
+});
 
- router.get('/viewworker',(req,res)=>{
-    constructorHelper.getAllProducts().then((products) => {
-      //console.log(products)
-      res.render('contractors/viewworker', {products})
-    })
-  })
+router.post('/addworker', (req, res) => {
+  const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
+  constructorHelper.addproduct(contractorId, req.body, (workerId) => {
+    res.redirect('/c/viewmine'); // After adding a worker, redirect to the viewmine page
+  });
+});
 
+router.get('/editworker/:id', async (req, res) => {
+  let product = await constructorHelper.getProductDetails(req.params.id);
+  console.log(product);
+  res.render('contractors/editworker', { product }); // Render edit worker form page with worker details
+});
 
-  router.get('/editworker/:id',async(req,res)=>{
-    let product=await constructorHelper.getProductDetails(req.params.id)
-    console.log(product)
-    res.render('contractors/editworker',{product})
-  })
-  
-  router.post('/editworker/:id',(req,res)=>{
-    constructorHelper.updateProduct(req.params.id,req.body).then(()=>{
-      res.redirect('/c')
-    })
-  })
+router.post('/editworker/:id', (req, res) => {
+  constructorHelper.updateProduct(req.params.id, req.body).then(() => {
+    res.redirect('/c/viewmine'); // After editing a worker, redirect to the viewmine page
+  });
+});
 
-  router.get('/delworker/:id', async (req, res) => {
+router.get('/delworker/:id', async (req, res) => {
+  const workerId = req.params.id;
+  try {
+    await constructorHelper.deleteWorker(workerId); // Delete the specified worker
+    res.redirect('/c/viewmine'); // After deleting a worker, redirect to the viewmine page
+  } catch (error) {
+    // Handle error appropriately
+    console.error(error);
+    res.redirect('/c');
+  }
+});
 
-      const workerId = req.params.id;
-      try
-      {
-        await constructorHelper.deleteWorker(workerId);
-        res.redirect('/c/viewworker');
-      } 
-    catch (error) {
-      // Handle error appropriately
-      console.error(error);
-      res.redirect('/c');
+router.get('/csignup', (req, res) => {
+  res.render('contractors/csignup'); // Render contractor signup form page
+});
+
+router.post('/csignup', (req, res) => {
+  constructorHelper.doConSignup(req.body).then((response) => {
+    console.log(response);
+    req.session.user = response;
+    req.session.user.loggedIn = true;
+    res.redirect('/c/csignup'); // After contractor signup, redirect to contractor signup page
+  });
+});
+
+router.post('/clogin', (req, res) => {
+  constructorHelper.doCLogin(req.body).then((response) => {
+    if (response.status) {
+      req.session.admin = response.admin;
+      req.session.admin.loggedIn = true;
+      res.redirect('/c/viewmine'); // After contractor login, redirect to the viewmine page
+    } else {
+      req.session.adminLoginErr = "Invalid username or password";
+      res.redirect('/c'); // If login fails, redirect back to the contractor login page
     }
   });
-  
+});
 
-  
+router.get('/viewmine', (req, res) => {
+  const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
+  constructorHelper.getMyWorker(contractorId).then((products) => {
+    res.render('contractors/viewmine', { products }); // Render the viewmine page with workers specific to the logged-in contractor
+  });
+});
 
 module.exports = router;
