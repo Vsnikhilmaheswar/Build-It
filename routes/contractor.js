@@ -111,4 +111,8 @@ router.post('/request', (req, res) => {
   });
 });
 
+router.get('/cindex',(req,res)=>{
+  res.render('contractors/contractorIndex')
+})
+
 module.exports = router;
