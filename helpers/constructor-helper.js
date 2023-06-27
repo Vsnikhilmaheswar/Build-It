@@ -132,5 +132,18 @@ module.exports = {
             });
         });
       },
+      storereq: (requestData, callback) => {
+        // Perform the necessary operations to store the request data in the database
+        // Example: Assuming you have a collection named 'reqDetails'
+        db.get().collection('reqDetails').insertOne(requestData)
+          .then(() => {
+            callback(true); // Invoke the callback with status true if storing is successful
+          })
+          .catch((error) => {
+            console.error(error);
+            callback(false); // Invoke the callback with status false if storing fails
+          });
+      },
+      
       
 }

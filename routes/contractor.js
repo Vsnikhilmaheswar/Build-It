@@ -94,4 +94,21 @@ router.post('/removeflag/:id', (req, res) => {
   });
 });
 
+router.get('/request', (req, res) => {
+  res.render("contractors/getreq"); // Render landing page after form submission
+});
+
+router.post('/request', (req, res) => {
+  var requestData = req.body; // Get the request details data from the form
+
+  // Call the helper function to store the request data
+  constructorHelper.storereq(requestData, (status) => {
+    if (status) {
+      res.redirect('/'); // Redirect to success page after storing the request details
+    } else {
+      res.redirect('/error'); // Redirect to error page if storing the request details fails
+    }
+  });
+});
+
 module.exports = router;
