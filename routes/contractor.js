@@ -50,11 +50,15 @@ router.get('/csignup', (req, res) => {
 });
 
 router.post('/csignup', (req, res) => {
-  constructorHelper.doConSignup(req.body).then((response) => {
-    console.log(response);
-    req.session.user = response;
+  constructorHelper.doConSignup(req.body).then((contractorId) => {
+    console.log(contractorId);
+    req.session.user = req.body;
+    req.session.user._id = contractorId; // Assign the contractor's _id to the session user
     req.session.user.loggedIn = true;
-    res.redirect('/c/csignup'); // After contractor signup, redirect to contractor signup page
+    res.redirect(`/c/contraProfile/${contractorId}`);
+  }).catch((error) => {
+    console.log(error);
+    res.redirect('/error-page'); // Redirect to an error page if necessary
   });
 });
 
@@ -94,13 +98,33 @@ router.post('/removeflag/:id', (req, res) => {
   });
 });
 
-router.get('/request', (req, res) => {
-  res.render("contractors/getreq"); // Render landing page after form submission
+router.get('/viewworker', (req, res) => {
+  const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
+  constructorHelper.getMyWorker(contractorId).then((products) => {
+    res.render('contractors/viewworker', { products }); // Render the viewmine page with workers specific to the logged-in contractor
+  });
+});
+
+router.get('/contraProfile/:id', async (req, res) => {
+  try {
+    const contractorId = req.params.id;
+    const contractor = await constructorHelper.getContractorDetails(contractorId);
+    res.render('contractors/contraProfile', { contractor });
+  } catch (error) {
+    console.error(error);
+    res.redirect('/error'); // Handle the error appropriately
+  }
+});
+
+router.get('/request/:id', (req, res) => {
+  const contractorId = req.params.id;
+  const userId = req.session.id; // Assuming the user ID is stored in the session as "userId"
+
+  res.render("contractors/getreq", { contractorId, userId }); // Pass contractorId and userId to the rendering template
 });
 
 router.post('/request', (req, res) => {
   var requestData = req.body; // Get the request details data from the form
- 
   // Call the helper function to store the request data
   constructorHelper.storereq(requestData, (status) => {
     if (status) {
@@ -110,16 +134,5 @@ router.post('/request', (req, res) => {
     }
   });
 });
-
-router.get('/viewworker', (req, res) => {
-  const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
-  constructorHelper.getMyWorker(contractorId).then((products) => {
-    res.render('contractors/viewworker', { products }); // Render the viewmine page with workers specific to the logged-in contractor
-  });
-});
-
-router.get('/contraProfile', (req, res) => {
-    res.render('contractors/viewworker', { products });
-  });
 
 module.exports = router;

@@ -1,1 +1,37 @@
-<h1>profile</h1>
+<section class="text-center">
+  <div class="p-5 bg-image" style="background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg'); height: 300px;"></div>
+  <div class="card mx-4 mx-md-5 shadow-5-strong" style="margin-top: -100px; background: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(30px);">
+    <div class="card-body py-5 px-md-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-5" style="color: #333; font-size: 24px;">You are visiting the profile of...</h2>
+          <form action="/c/request/{{contractor._id}}" method="get" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <label class="small mb-1 text-white" style="color: #666; font-size: 14px;">Username (how your name will appear to other users on the site)</label>
+                  <p class="form-control text-dark" style="color: #555; font-size: 16px;">{{contractor.username}}</p>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <label class="small mb-1 text-white" style="color: #666; font-size: 14px;">Name</label>
+                  <p class="form-control text-dark" style="color: #555; font-size: 16px;">{{contractor.Fname}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-outline mb-4">
+              <label class="small mb-1 text-white" style="color: #666; font-size: 14px;">Email</label>
+              <p class="form-control text-dark" style="color: #555; font-size: 16px;">{{contractor.email}}</p>
+            </div>
+            <!-- <div class="form-outline mb-4">
+              <input type="password" id="form3Example4" class="form-control" />
+              <label class="form-label" for="form3Example4">Password</label>
+            </div> -->
+            <button type="submit" class="btn btn-primary" style="font-size: 18px;">Request Worker</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

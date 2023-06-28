@@ -1,0 +1,18 @@
+router.get('/request/:id', async (req, res) => {
+  const contractorId = req.params.id;
+  const userId = req.session.id;
+
+  try {
+    const contractor = await getContractorById(contractorId);
+
+    if (contractor) {
+      res.render('contractors/getreq', { contractor, userId });
+    } else {
+      // Handle the case when the contractor with the specified ID is not found
+      res.redirect('/error');
+    }
+  } catch (error) {
+    console.error(error);
+    res.redirect('/error');
+  }
+});
