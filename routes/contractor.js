@@ -111,8 +111,27 @@ router.post('/request', (req, res) => {
   });
 });
 
-router.get('/cindex',(req,res)=>{
-  res.render('contractors/contractorIndex')
+router.get('/viewworker', (req, res) => {
+  const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
+  constructorHelper.getMyWorker(contractorId).then((products) => {
+    res.render('contractors/viewworker', { products }); // Render the viewmine page with workers specific to the logged-in contractor
+  });
+});
+
+router.get('/indexReq',(req,res)=>{
+  res.render('contractors/indexReq')
+})
+
+router.get('/indexaddwork',(req,res)=>{
+  res.render('contractors/indexaddwork')
+})
+
+router.get('/indexaddworker',(req,res)=>{
+  res.render('contractors/indexaddworker')
+})
+
+router.get('/indexviewprofile',(req,res)=>{
+  res.render('contractors/indexviewprofile')
 })
 
 module.exports = router;
