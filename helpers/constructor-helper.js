@@ -116,6 +116,18 @@ module.exports = {
       resolve(products);
     });
   },
+  retrieveMyWorker:(contractorId) =>{
+    return new Promise((resolve, reject) => {
+      getMyWorker(contractorId)
+        .then((workers) => {
+          resolve(workers);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+  
 
   updateFlag: (contractorId, workerId, flag) => {
     return new Promise((resolve, reject) => {

@@ -51,17 +51,29 @@ router.get('/csignup', (req, res) => {
 });
 
 router.post('/csignup', (req, res) => {
-  constructorHelper.doConSignup(req.body).then((contractorId) => {
-    console.log(contractorId);
-    req.session.user = req.body;
-    req.session.user._id = contractorId; // Assign the contractor's _id to the session user
-    req.session.user.loggedIn = true;
-    res.redirect(`/c/contraProfile/${contractorId}`);
-  }).catch((error) => {
-    console.log(error);
-    res.redirect('/error-page'); // Redirect to an error page if necessary
-  });
+  constructorHelper.doConSignup(req.body)
+    .then((contractorId) => {
+      console.log(contractorId);
+      req.session.user = req.body;
+      req.session.user._id = contractorId; // Assign the contractor's _id to the session user
+      req.session.user.loggedIn = true;
+      constructorHelper.getContractorDetails(contractorId) // Retrieve the contractor details
+        .then((contractor) => {
+          res.redirect(`/c/viewworker/${contractorId}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.redirect('/error-page'); // Redirect to an error page if necessary
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.redirect('/error-page'); // Redirect to an error page if necessary
+    });
 });
+
+
+
 
 router.post('/clogin', (req, res) => {
   constructorHelper.doCLogin(req.body).then((response) => {
@@ -78,6 +90,13 @@ router.post('/clogin', (req, res) => {
 
 router.get('/viewmine', (req, res) => {
   const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
+  constructorHelper.getMyWorker(contractorId).then((products) => {
+    res.render('contractors/viewmine', { products }); // Render the viewmine page with workers specific to the logged-in contractor
+  });
+});
+
+router.get('/viewmine/:id', (req, res) => {
+  const contractorId = req.params.id; // Get the logged-in contractor's _id from the session
   constructorHelper.getMyWorker(contractorId).then((products) => {
     res.render('contractors/viewmine', { products }); // Render the viewmine page with workers specific to the logged-in contractor
   });
@@ -101,6 +120,13 @@ router.post('/removeflag/:id', (req, res) => {
 
 router.get('/viewworker', (req, res) => {
   const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
+  constructorHelper.getMyWorker(contractorId).then((products) => {
+    res.render('contractors/viewworker', { products }); // Render the viewmine page with workers specific to the logged-in contractor
+  });
+});
+
+router.get('/viewworker/:id', (req, res) => {
+  const contractorId = req.params.id; // Get the logged-in contractor's _id from the session
   constructorHelper.getMyWorker(contractorId).then((products) => {
     res.render('contractors/viewworker', { products }); // Render the viewmine page with workers specific to the logged-in contractor
   });
