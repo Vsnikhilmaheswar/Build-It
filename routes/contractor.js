@@ -78,41 +78,4 @@ router.get('/viewmine', (req, res) => {
   });
 });
 
-router.post('/assignflag/:id', (req, res) => {
-  const contractorId = req.session.admin._id;
-  const workerId = req.params.id;
-  constructorHelper.updateFlag(contractorId, workerId, true).then(() => {
-    res.redirect('/c/viewmine');
-  });
-});
-
-router.post('/removeflag/:id', (req, res) => {
-  const contractorId = req.session.admin._id;
-  const workerId = req.params.id;
-  constructorHelper.updateFlag(contractorId, workerId, false).then(() => {
-    res.redirect('/c/viewmine');
-  });
-});
-
-router.get('/request', (req, res) => {
-  res.render("contractors/getreq"); // Render landing page after form submission
-});
-
-router.post('/request', (req, res) => {
-  var requestData = req.body; // Get the request details data from the form
-
-  // Call the helper function to store the request data
-  constructorHelper.storereq(requestData, (status) => {
-    if (status) {
-      res.redirect('/'); // Redirect to success page after storing the request details
-    } else {
-      res.redirect('/error'); // Redirect to error page if storing the request details fails
-    }
-  });
-});
-
-router.get('/cindex',(req,res)=>{
-  res.render('contractors/contractorIndex')
-})
-
 module.exports = router;

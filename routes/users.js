@@ -42,6 +42,16 @@ router.get('/signup', (req, res) => {
 })
 
 
+
+router.post('/signup', (req, res) => {
+  userHelper.doSignup(req.body).then((response) => {
+    console.log(response);
+    req.session.user = response
+    req.session.user.loggedIn = true
+    res.redirect('/')
+  })
+})
+
 router.get('/profile',verifyLogin, async(req,res)=>{
 
   let user = req.session.user
@@ -79,14 +89,7 @@ router.post('/edit-profile/:id',(req,res)=>{
 
 
 
-router.post('/signup', (req, res) => {
-  userHelper.doSignup(req.body).then((response) => {
-    console.log(response);
-    req.session.user = response
-    req.session.user.loggedIn = true
-    res.redirect('/')
-  })
-})
+
 
 router.post('/login', (req, res) => {
   userHelper.doLogin(req.body).then((response) => {
