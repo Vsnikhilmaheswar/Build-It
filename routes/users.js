@@ -46,7 +46,8 @@ router.get('/', async function (req, res, next) {
   } catch (error) {
     console.log(error);
   }
-
+ category=await producthelper.getcategories()
+console.log(category)
   producthelper.getAllProducts().then((products) => {
     res.render('user/view-product', { contractors, products, user, cartCount });
   });

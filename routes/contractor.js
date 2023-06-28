@@ -1,5 +1,6 @@
 var express = require('express');
 const constructorHelper = require('../helpers/constructor-helper');
+const session = require('express-session');
 var router = express.Router();
 
 router.get('/', (req, res) => {
@@ -107,9 +108,10 @@ router.get('/viewworker', (req, res) => {
 
 router.get('/contraProfile/:id', async (req, res) => {
   try {
+    let user = req.session.user;
     const contractorId = req.params.id;
     const contractor = await constructorHelper.getContractorDetails(contractorId);
-    res.render('contractors/contraProfile', { contractor });
+    res.render('contractors/contraProfile', { contractor,user });
   } catch (error) {
     console.error(error);
     res.redirect('/error'); // Handle the error appropriately
@@ -118,9 +120,11 @@ router.get('/contraProfile/:id', async (req, res) => {
 
 router.get('/request/:id', (req, res) => {
   const contractorId = req.params.id;
-  const userId = req.session.id; // Assuming the user ID is stored in the session as "userId"
-
-  res.render("contractors/getreq", { contractorId, userId }); // Pass contractorId and userId to the rendering template
+  let user = req.session.user;
+  const userId = req.session.user._id;  // Assuming the user ID is stored in the session as "userId"
+console.log("contractorId",contractorId);
+console.log("userId",userId);
+  res.render("contractors/getreq", { contractorId, userId,user }); // Pass contractorId and userId to the rendering template
 });
 
 router.post('/request', (req, res) => {

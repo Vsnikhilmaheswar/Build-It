@@ -12,12 +12,28 @@ module.exports = {
             callback(data.ops[0]._id)
         })
     },
+    addcategory:(category,callback)=>{
+        console.log(category);
+        db.get().collection('category').insertOne(category).then((data) => {
+            // console.log(data);
+             callback(data.ops[0]._id)
+         })
+    },
+
     getAllProducts:()=>{
         return new Promise(async(resolve,reject)=>{
             let product=await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
             resolve(product)
         })
     },
+    getcategories:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let product=await db.get().collection('category').find().toArray()
+            resolve(product)
+        })
+    },
+
+
     deleteWorker: (workerId) => {
         return new Promise((resolve, reject) => {
           db.get().collection(collection.WORKER_COLLECTION).deleteOne({ _id: objectId(workerId) })

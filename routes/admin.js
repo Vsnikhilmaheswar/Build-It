@@ -8,7 +8,7 @@ const verifyLogin = (req, res, next) => {
   if (req.session.admin) {
     next()
   } else {
-    res.redirect('/login')
+    res.redirect('/')
   }
 }
 // router.get('/', function (req, res, next) {
@@ -42,6 +42,25 @@ router.get('/dashboard',verifyLogin,(req,res)=>{
 router.get('/addCategory',verifyLogin,(req,res)=>{
   let admin =  req.session.admin
   res.render('admin/addcategory')
+})
+
+
+router.post('/addCategory',verifyLogin,(req,res)=>{
+  let admin =  req.session.admin
+  res.render('admin/addcategory')
+
+  producthelper.addcategory(req.body, (id) => {
+    let image = req.files.Image
+    console.log(id)
+    image.mv('./public/images/cateimg/' + id + '.jpg', (err, done) => {
+      if (!err) {
+        res.render("admin/addCategory")
+      } else {
+        console.log(err);
+      }
+    })
+  })
+
 })
 
 router.get('/alluser', function (req, res) {

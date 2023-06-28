@@ -1,0 +1,36 @@
+ <div class="form-container">
+      <form action="/admin/addCategory" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="categoryName">Add New Category</label>
+        <input type="text" class="form-control" name="category" id="categoryName">
+        <label for="">Image</label>
+        <input type="file" name="Image" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary custom-button">Submit</button>
+    </form>
+  </div>
+
+
+  <style>
+    
+
+    .form-container {
+        margin-top: 250px;
+      margin-left: 500px;
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f8f8f8;
+    }
+
+    .custom-button {
+      background-color: rgba(239, 151, 47, 1);
+      border-color: rgba(239, 151, 47, 1);
+    }
+
+    .custom-button:hover {
+      background-color: rgba(239, 151, 47, 0.8);
+      border-color: rgba(239, 151, 47, 0.8);
+    }
+  </style>
