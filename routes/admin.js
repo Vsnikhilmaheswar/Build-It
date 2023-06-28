@@ -5,7 +5,7 @@ const productHelpers = require('../helpers/product-helpers');
 /* GET users listing. */
 const userHelpers = require('../helpers/user-helpers');
 const verifyLogin = (req, res, next) => {
-  if (req.session.admin.loggedIn) {
+  if (req.session.admin) {
     next()
   } else {
     res.redirect('/login')
@@ -23,7 +23,7 @@ router.post('/login', (req, res) => {
   userHelpers.doALogin(req.body).then((response) => {
     if (response.status) {
       req.session.admin = response.admin;
-      req.session.admin.loggedIn = true;
+      req.session.admin = true;
       res.redirect('/admin/dashboard');
     } else {
       req.session.adminLoginErr = "Invalid username or password";
@@ -39,12 +39,16 @@ router.get('/dashboard',verifyLogin,(req,res)=>{
   })
 })
 
-
+router.get('/addCategory',verifyLogin,(req,res)=>{
+  let admin =  req.session.admin
+  res.render('admin/addcategory')
+})
 
 router.get('/alluser', function (req, res) {
+  let admin = req.session.admin
   producthelper.getAllUser().then((users) => {
   console.log(users)
-    res.render('admin/alluser', { users })
+    res.render('admin/alluser', { users,admin })
   })
 })
 
