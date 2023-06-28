@@ -71,79 +71,21 @@
       </div>
 
       <div class="container">
-
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card">
-              <div class="card-body" style="margin-top: 10px;">
-                <h5 class="card-title" style="text-align: center;">Sravan construction manager</h5>
-                <hr style="color: rgba(239, 151, 47, 1);">
-                <p class="card-text">The services that are provided are</p>
-                <ol>
-                  <li>Electrician</li>
-                  <li>Plumber</li>
-                  <li>carpenter</li>
-                </ol>
-
-                <a href="#" class="btn btn-primary card-button stretched-link">view services</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card">
-              <div class="card-body" style="margin-top: 10px;">
-                <h5 class="card-title" style="text-align: center;">Sravan construction manager</h5>
-                <hr style="color: rgba(239, 151, 47, 1);">
-                <p class="card-text">The services that are provided are</p>
-                <ol>
-                  <li>Electrician</li>
-                  <li>Plumber</li>
-                  <li>carpenter</li>
-                </ol>
-                <a href="#" class="btn btn-primary card-button">view services</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card">
-              <div class="card-body" style="margin-top: 10px;">
-                <h5 class="card-title" style="text-align: center;">Sravan construction manager</h5>
-                <hr style="color: rgba(239, 151, 47, 1);">
-                <p class="card-text">The services that are provided are</p>
-                <ol>
-                  <li>Electrician</li>
-                  <li>Plumber</li>
-                  <li>carpenter</li>
-                </ol>
-                <a href="#" class="btn btn-primary card-button">view services</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card">
-              <div class="card-body" style="margin-top: 10px;">
-                <h5 class="card-title" style="text-align: center;">Sravan construction manager</h5>
-                <hr style="color: rgba(239, 151, 47, 1);">
-                <p class="card-text">The services that are provided are</p>
-                <ol>
-                  <li>Electrician</li>
-                  <li>Plumber</li>
-                  <li>carpenter</li>
-                </ol>
-                <a href="#" class="btn btn-primary card-button">view services</a>
-              </div>
-            </div>
-          </div>
-
-
-
+  <div class="row">
+    {{#each contractors}}
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{this.Fname}}</h5>
+          {{!-- <p class="card-text">{{this.description}}</p> --}}
+          <a href="/c/contraProfile/{{this._id}}" class="btn btn-primary stretched-link">View</a>
         </div>
-
-
       </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+
 
 
     </div>

@@ -16,19 +16,46 @@ const verifyLogin = (req, res, next) => {
 }
 //const { response } = require('../app');
 /* GET home page. */
-router.get('/', async function (req, res, next) {
 
-  let user = req.session.user
-  // console.log(user);
-  let cartCount = null
+
+
+// router.get('/', async function (req, res, next) {
+
+//   let user = req.session.user
+//   // console.log(user);
+//   let cartCount = null
+//   if (req.session.user) {
+//     cartCount = await userHelper.getCartCount(req.session.user._id)
+//   }
+//   producthelper.getAllProducts().then((products) => {
+//     //console.log(products)
+//     res.render('user/view-product', { products, user, cartCount })
+//   })
+// });
+router.get('/', async function (req, res, next) {
+  let user = req.session.user;
+  let cartCount = null;
+  let contractors = [];
+
   if (req.session.user) {
-    cartCount = await userHelper.getCartCount(req.session.user._id)
+    cartCount = await userHelper.getCartCount(req.session.user._id);
   }
+
+  try {
+    contractors = await userHelpers.getAllContractors();
+  } catch (error) {
+    console.log(error);
+  }
+
   producthelper.getAllProducts().then((products) => {
-    //console.log(products)
-    res.render('user/view-product', { products, user, cartCount })
-  })
+    res.render('user/view-product', { contractors, products, user, cartCount });
+  });
 });
+
+
+
+
+
 router.get('/login', (req, res) => {
   if (req.session.user) {
     res.redirect('/');

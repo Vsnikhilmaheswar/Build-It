@@ -389,5 +389,18 @@ editProfile:(userId,userDetails)=>{
       })
   })
 },
+
+getAllContractors: () => {
+  return new Promise((resolve, reject) => {
+    db.get().collection(collection.CONTRACTOR_COLLLECTION).find().toArray((err, contractors) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(contractors);
+      }
+    });
+  });
+}
+
  
 }

@@ -117,4 +117,9 @@ router.get('/viewworker', (req, res) => {
     res.render('contractors/viewworker', { products }); // Render the viewmine page with workers specific to the logged-in contractor
   });
 });
+
+router.get('/contraProfile', (req, res) => {
+    res.render('contractors/viewworker', { products });
+  });
+
 module.exports = router;
