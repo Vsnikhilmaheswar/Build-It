@@ -4,6 +4,7 @@ var producthelper = require('../helpers/product-helpers');
 const productHelpers = require('../helpers/product-helpers');
 /* GET users listing. */
 const userHelpers = require('../helpers/user-helpers');
+const async = require('hbs/lib/async');
 const verifyLogin = (req, res, next) => {
   if (req.session.admin) {
     next()
@@ -71,9 +72,9 @@ router.get('/alluser', function (req, res) {
   })
 })
 
-router.get('/add-product', function (req, res) {
-
-  res.render('admin/add-product',{ admin : req.session.admin})
+router.get('/add-product',async function (req, res) {
+  category=await producthelper.getcategories()
+  res.render('admin/add-product',{ admin : req.session.admin,category})
 })
 
 router.post('/add-product', (req, res) => {

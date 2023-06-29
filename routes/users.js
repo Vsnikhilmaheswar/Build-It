@@ -36,7 +36,7 @@ router.get('/', async function (req, res, next) {
   let user = req.session.user;
   let cartCount = null;
   let contractors = [];
-
+  let category= [];
   if (req.session.user) {
     cartCount = await userHelper.getCartCount(req.session.user._id);
   }
@@ -49,7 +49,7 @@ router.get('/', async function (req, res, next) {
  category=await producthelper.getcategories()
 console.log(category)
   producthelper.getAllProducts().then((products) => {
-    res.render('user/view-product', { contractors, products, user, cartCount });
+    res.render('user/view-product', { contractors,user, cartCount,category });
   });
 });
 

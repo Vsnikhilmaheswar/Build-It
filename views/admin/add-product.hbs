@@ -4,20 +4,23 @@
             <div class="col-md-6">
                 <h2 class="text-center">Add Product</h2>
                 <form action="/admin/add-product" method="POST" enctype="multipart/form-data">
-                    <label for="">Name</label>
+                    <label for="Name">Name</label>
                     <input type="text" name="Name" class="form-control">
-                    <label for="">category</label>
-                    <input type="text" name="category" class="form-control">
-                    <label for="value">price</label>
+                    <label for="category">Category</label>
+                    <select name="category" class="form-control">
+                        {{#each category}}
+                            <option value="{{this.category}}" name="category" >{{this.category}}</option>
+                        {{/each}}
+                    </select>
+                    <label for="price">Price</label>
                     <input type="text" name="price" class="form-control">
-                    <label for="">description</label>
+                    <label for="description">Description</label>
                     <input type="text" name="description" class="form-control">
-                    <label for="">Image</label>
+                    <label for="Image">Image</label>
                     <input type="file" name="Image" class="form-control">
                     <button type="submit" class="btn btn-success mt-5">Submit</button>
                 </form>
             </div>
         </div>
     </div>
-   </div>
 </section>

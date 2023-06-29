@@ -28,11 +28,20 @@ module.exports = {
     },
     getcategories:()=>{
         return new Promise(async(resolve,reject)=>{
-            let product=await db.get().collection('category').find().toArray()
-            resolve(product)
+            let Category=await db.get().collection('category').find().toArray()
+           console.log(Category)
+            resolve(Category)
         })
     },
-
+    delectProduct:(proId)=>{
+        return new Promise((resolve,reject)=>{
+            console.log(objectId(proId));
+            db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({_id:objectId(proId)}).then((response)=>{
+              // console.log(response);
+                resolve(response)
+            })
+        })
+    },
 
     deleteWorker: (workerId) => {
         return new Promise((resolve, reject) => {
@@ -44,8 +53,7 @@ module.exports = {
               reject(error);
             });
         });
-      }
-      ,
+      },
     getProductDetails:(proId)=>{
         return new Promise((resolve,reject)=>{
             db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(proId)}).then((product)=>{
