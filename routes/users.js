@@ -136,7 +136,7 @@ router.post('/login', (req, res) => {
 })
 router.get('/logout', (req, res) => {
   req.session.user=null
-  req.session.user.loggedIn = false
+  req.session.user = false
   res.redirect('/')
 })
 router.get('/cart', verifyLogin, async (req, res) => {
@@ -196,8 +196,9 @@ router.post('/place-order', async (req, res) => {
   console.log(req.body)
 })
 
-router.get('/order-success', (req, res) => {
-  res.render('user/order-success', { user: req.session.user })
+router.get('/order-success', async(req, res) => {
+  let orders=await userHelpers.viewRecentOrderDetails(req.session.user._id)
+  res.render('user/order-success', { user: req.session.user,orders })
 })
 
 router.get('/orders',verifyLogin,async (req, res) => {

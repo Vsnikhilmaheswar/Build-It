@@ -2,11 +2,11 @@
       <form action="/admin/addCategory" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="categoryName">Add New Category</label>
-        <input type="text" class="form-control" name="category" id="categoryName">
+        <input type="text" class="form-control" name="category" id="categoryName" required>
           <label for="description">Description</label>
                     <input type="text" name="description" class="form-control">
         <label for="">Image</label>
-        <input type="file" name="Image" class="form-control">
+        <input type="file" name="Image" class="form-control" required>
       </div>
       <button type="submit" class="btn btn-primary custom-button">Submit</button>
     </form>

@@ -1,22 +1,19 @@
 <body>
     <div class="container">
   <form class="form form--login framed" action="/login" method="POST">
-    <input type="email" placeholder="Email" class="input input--top" name="email"/>
-    <input type="password" placeholder="Password" class="input" name="Password" />
+    <input type="email" placeholder="Email" class="input input--top" name="email" required/>
+    <input type="password" placeholder="Password" class="input" name="Password" required/>
     <!-- <input type="submit" value="Log in" class="input input--submit" /> -->
     <button type="submit" class="input input--submit">Login</button>
     <label for="toggle--signup" ><a class="text text--small text--centered" href="/signup">Create new Account</a></label>
 
     {{#if loginErr}}
-    <p class="error" style="color:red;">Invalid username or password</p>
+   <p class="error" style="color:rgb(255, 0, 0); font-weight:bold; font-size:20px; margin-top: 27px;">Invalid username or password</p>
+
     {{/if}}
   </form>
   
-  <div class="legal">
-    <a class="text text--small text--border-right" href="javascript:;">Terms</a>
-    <a class="text text--small text--border-right" href="javascript:;">Privacy</a>
-    <a class="text text--small" href="javascript:;">Password help</a>
-  </div>
+ 
   <div class="fullscreen-bg"></div>
     </div>
 </body>

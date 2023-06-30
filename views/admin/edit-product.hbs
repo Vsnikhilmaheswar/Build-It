@@ -14,7 +14,7 @@
                     <input type="text" name="description" class="form-control" value="{{product.description}}">
                     <label for="">Image</label>
                     <img style="width:100px;height:auto" src="/images/{{product._id}}.jpg" alt="" id="imgView" class="pt-3">
-                    <input type="file" name="Image" class="form-control" onchange="viewImage(event)">
+                    <input type="file" name="Image" class="form-control" onchange="viewImage(event)" required>
                     <button type="submit" class="btn btn-success mt-5">Submit</button>
                 </form>
             </div>

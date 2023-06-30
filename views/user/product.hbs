@@ -1,5 +1,30 @@
+   <div class="container-fluid">
 
-<section>
+      <div class="row">
+    
+     {{#each product}}
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="card">
+            <img src="/images/{{this._id}}.jpg" class="card-img-top" alt="..." style="height:205px;">
+            <div class="card-body">
+              <h5 class="card-title">{{this.Name}}</h5>
+              <p class="card-text">{{this.description}}</p>
+                <p class="card-text">RS.{{this.price}}.</p>
+                        <button onclick="AddToCart('{{this._id}}')" class="btn btn-primary" > ADD TO Cart </button>
+            </div>
+          </div>
+        </div>
+    {{/each}}
+        <!--shop category end-->
+      </div>
+    
+
+
+
+
+    </div>
+
+{{!-- <section>
     <div class="container">
         <div class="row">
             {{#each product}}
@@ -18,4 +43,4 @@
             </div>
             {{/each}}
         </div>
-    </div>
+    </div> --}}

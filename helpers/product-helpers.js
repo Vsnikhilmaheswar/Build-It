@@ -2,6 +2,7 @@
 var db=require('../config/connection')
 var collection=require('../config/collections');
 const Collection = require('mongodb/lib/collection');
+const async = require('hbs/lib/async');
 var objectId = require('mongodb').ObjectID
 module.exports = {
 
@@ -78,6 +79,13 @@ module.exports = {
 
 
     getAllUser:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let users=await db.get().collection(collection.USER_COLLECTION).find().toArray()
+            resolve(users)
+        })
+    },
+
+    getAllorder:()=>{
         return new Promise(async(resolve,reject)=>{
             let users=await db.get().collection(collection.USER_COLLECTION).find().toArray()
             resolve(users)

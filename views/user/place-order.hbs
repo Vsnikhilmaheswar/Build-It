@@ -2,18 +2,28 @@
     <h1>Order Form</h1>
     <form action="" id="checkout-form">
         <div class="mb-3">
+             <label for="address" class="form-label">Name</label>
+            <input type="text" class="form-control" id="address" name="NAME" placeholder="Enter Full Name(Required)" required>
             <label for="address" class="form-label">Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address">
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address(Required)" required>
+        </div>
+        <div class="mb-3">
+            <label for="state" class="form-label">State</label>
+            <input type="text" class="form-control" id="pincode" name="state" placeholder="Enter your State(Required)"required>
+        </div>
+        <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="pincode" name="city" placeholder="Enter your City(Required)"   required>
         </div>
         <div class="mb-3">
             <label for="pincode" class="form-label">Pincode</label>
-            <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Enter pincode">
+            <input type="number" class="form-control" id="pincode" name="pincode" placeholder="Enter your pincode(Required)" pattern="\d{6}" minlength="6" maxlength="6" required>
         </div>
         <div class="mb-3">
             <label for="mobile" class="form-label">Mobile Number</label>
-            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter mobile number">
+            <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter mobile number(Required)" title="Please Enter Proper code!" pattern="[1-9]{1}[0-9]{9}" required>
             <input type="text" name="userId" id="" value="{{user._id}}" hidden>
-            <input type="text" name="deliveryStatus" value="Not Delivered" hidden>
+            <input type="text" class="form-control" name="deliveryStatus" value="Not Delivered" hidden>
         </div>
         <div class="mb-3">
 

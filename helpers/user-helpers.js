@@ -222,7 +222,29 @@ viewOrderproducts:(orderId)=>{
     }
       )
     },
-  
+    viewRecentOrderDetails: (userID) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          let orderDetails = await db
+            .get()
+            .collection(collection.ORDER_COLLECTION)
+            .find({ userId: objectId(userID) })
+            .sort({ _id: -1 })
+            .limit(1)
+            .toArray();
+    
+          if (orderDetails.length > 0) {
+            console.log(orderDetails[0]);
+            resolve(orderDetails[0]);
+          } else {
+            resolve(null);
+          }
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }
+    ,
 
 
   getCartCount: (userId) => {
@@ -319,16 +341,21 @@ viewOrderproducts:(orderId)=>{
       let status = order.paymentMethod === 'cod' ? 'placed' : 'pending'
       let orderObj = {
         deliveryDetails: {
+          name:order.NAME,
           mobile: order.mobile,
           address: order.address,
-          pincode: order.pincode
+          pincode: order.pincode,
+          state:order.state,
+          city:order.city
         },
         userId: objectId(order.userId),
         PaymentMethod: order.paymentMethod,
         products: products,
         totalAmount: total,
         status: status,
-        date: new Date()
+        date: new Date(),
+        deliveryStatus:order.deliveryStatus,
+
       }
       db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
         db.get().collection(collection.CART_COLLECTION).removeOne({ user: objectId(order.userId) })

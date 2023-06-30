@@ -23,11 +23,13 @@ router.get('/', (req, res) => {
 router.post('/login', (req, res) => {
   userHelpers.doALogin(req.body).then((response) => {
     if (response.status) {
-      req.session.admin = response.admin;
-      req.session.admin = true;
+      
+      req.session.admin = response.admin
+      req.session.admin.loggedIn = true
       res.redirect('/admin/dashboard');
     } else {
       req.session.adminLoginErr = "Invalid username or password";
+      req.session.admin = false;
       res.redirect('/admin');
     }
   });
@@ -42,20 +44,20 @@ router.get('/dashboard',verifyLogin,(req,res)=>{
 
 router.get('/addCategory',verifyLogin,(req,res)=>{
   let admin =  req.session.admin
-  res.render('admin/addcategory')
+  res.render('admin/addcategory',{admin})
 })
 
 
 router.post('/addCategory',verifyLogin,(req,res)=>{
   let admin =  req.session.admin
-  res.render('admin/addcategory')
+
 
   producthelper.addcategory(req.body, (id) => {
     let image = req.files.Image
     console.log(id)
     image.mv('./public/images/cateimg/' + id + '.jpg', (err, done) => {
       if (!err) {
-        res.render("admin/addCategory")
+        res.render("admin/addCategory",{admin})
       } else {
         console.log(err);
       }
@@ -71,6 +73,15 @@ router.get('/alluser', function (req, res) {
     res.render('admin/alluser', { users,admin })
   })
 })
+
+router.get('/allorder', function (req, res) {
+  let admin = req.session.admin
+  producthelper.getAllorder().then((orders) => {
+  console.log(users)
+    res.render('admin/alluser', { orders,admin })
+  })
+})
+
 
 router.get('/add-product',async function (req, res) {
   category=await producthelper.getcategories()
@@ -93,24 +104,31 @@ router.post('/add-product', (req, res) => {
   });
 })
 
-router.get('/delete-product/:id',(req,res) => {
+  
+
+
+
+router.get('/delete-product/:id',verifyLogin,(req,res) => {
   var proId = req.params.id
+  let admin = req.session.admin
   console.log(proId);
   productHelpers.delectProduct(proId).then((response) => {
-    res.redirect('/admin/dashboard')
+    res.redirect('/admin/dashboard',{admin})
   })
 })
 
 router.get('/edit-product/:id',async(req,res)=>{
   let product=await productHelpers.getProductDetails(req.params.id)
   console.log(product)
-  res.render('admin/edit-product',{product})
+  let admin = req.session.admin
+  res.render('admin/edit-product',{product,admin})
 })
 
 router.post('/edit-product/:id',(req,res)=>{
   let id = req.params.id
+  let admin = req.session.admin
   productHelpers.updateProduct(req.params.id,req.body).then(()=>{
-    res.redirect('admin/view-products')
+    res.redirect('admin/view-products',{admin})
     
     if(req.files.Image)
     {
@@ -127,13 +145,6 @@ router.get('/Adminsignup', (req, res) => {
 })
 
 
-router.post('/Adminsignup', (req, res) => {
-  userHelpers.
-  doAdminSignup(req.body).then((response) => {
-    console.log(response);
-    req.session.admin = response
-    req.session.admin.loggedIn = true
-    res.redirect('/')
-  })
-})
+//  
+
 module.exports = router;
