@@ -169,8 +169,36 @@ module.exports = {
         console.error(error);
         callback(false); // Callback with false to indicate an error occurred while storing request data
       });
-  }
+  },
+  getContractorRequests: (contractorId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collection.REQ_DETAILS_COLLECTION)
+        .find({ contractorId: contractorId })
+        .toArray()
+        .then((requests) => {
+          resolve(requests);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+  updateRequestStatus: (requestId, status) => {
+    return new Promise((resolve, reject) => {
+      const updateValue = status === 'accept' ? 'accepted' : 'rejected';
 
-
-  
+      db.get().collection(collection.REQ_DETAILS_COLLECTION)
+        .updateOne(
+          { _id: ObjectID(requestId) },
+          { $set: { work: updateValue } }
+        )
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  } 
 }

@@ -166,5 +166,48 @@ router.post('/request/:id', (req, res) => {
     }
   });
 });
+router.get('/viewUserRequest', (req, res) => {
+  const contractorId = req.session.admin._id; // Get the logged-in contractor's ID from the session
+
+  constructorHelper.getContractorRequests(contractorId)
+    .then((requests) => {
+      res.render('contractors/viewUserRequest', { requests }); // Render the viewrequests page with the retrieved requests
+    })
+    .catch((error) => {
+      console.error(error);
+      res.redirect('/error'); // Handle the error appropriately
+    });
+});
+
+router.post('/c/accept-request/:id', (req, res) => {
+  const requestId = req.params.id;
+  console.log(requestId)
+
+  // Update the value of 'work' attribute to 'accepted' in the database
+  constructorHelper.updateRequestStatus(requestId, 'accepted')
+    .then(() => {
+      res.redirect('/c/viewUserRequests'); // Redirect back to the viewrequests page after updating the status
+    })
+    .catch((error) => {
+      console.error(error);
+      res.redirect('/error'); // Handle the error appropriately
+    });
+});
+
+router.post('/c/deny-request/:id', (req, res) => {
+  const requestId = req.params.id;
+
+  // Update the value of 'work' attribute to 'denied' in the database
+  constructorHelper.updateRequestStatus(requestId, 'denied')
+    .then(() => {
+      res.redirect('/c/viewUserRequests'); // Redirect back to the viewrequests page after updating the status
+    })
+    .catch((error) => {
+      console.error(error);
+      res.redirect('/error'); // Handle the error appropriately
+    });
+});
+
+
 
 module.exports = router;
