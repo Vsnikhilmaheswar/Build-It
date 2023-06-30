@@ -1,18 +1,166 @@
-router.get('/request/:id', async (req, res) => {
-  const contractorId = req.params.id;
-  const userId = req.session.id;
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+// <link rel="stylesheet" href="css/bootstrap.css">
+// <link rel="stylesheet" href="style.css">
+//     <title>Add worker</title>
+// </head>
+// <body>
+//     <div class="container container-1">
+//         <!--navbar contents-->
+//                 <nav class="navbar navbar-expand-lg navbar-light bg-light" style=" height: 65px;">
+//                   <div class="container-fluid">
+//                     <a class="navbar-brand" href="#">Build It</a>
+//                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+//                         <span class="navbar-toggler-icon"></span>
+//                       </button>
+//                     <div class="collapse navbar-collapse" id="navbarTogglerDemo02" style="background-color:white;">
+//                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+//                           <li class="nav-item">
+//                             <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+//                           </li>
+//                           <li class="nav-item">
+//                             <a class="nav-link" href="#">About</a>
+//                           </li>
+//                           <li class="nav-item">
+//                             <a class="nav-link" href="#">cart</a>
+//                           </li>
+//                         </ul>
+//                         <form class="d-flex">
+//                           <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search">
+                          
 
-  try {
-    const contractor = await getContractorById(contractorId);
 
-    if (contractor) {
-      res.render('contractors/getreq', { contractor, userId });
-    } else {
-      // Handle the case when the contractor with the specified ID is not found
-      res.redirect('/error');
-    }
-  } catch (error) {
-    console.error(error);
-    res.redirect('/error');
-  }
-});
+//                         </form>
+//                         <button class="btn btn-color" type="submit" style="margin: 10px ">Search</button>
+
+//                       </div>
+//                     </div>
+//                   </nav>
+
+//                   <!--navbar end-->
+
+//                   <div class="container container-2">
+
+//                     <div class="container">
+
+                
+//                   <h1 class="heading" style="text-align: center; color: rgba(239, 151, 47, 1);;">Sravan construction manager</h1><hr>
+//                   <h1 class="heading" style="text-align: center; color: rgba(239, 151, 47, 1);;">Add workers</h1><hr>
+
+//                   <form>
+//                     <!-- 2 column grid layout with text inputs for the first and last names -->
+//                     <div class="row mb-4">
+//                       <div class="col">
+//                         <div class="form-outline">
+//                           <input type="text" id="form6Example1" class="form-control" />
+//                           <label class="form-label" for="form6Example1">First name</label>
+//                         </div>
+//                       </div>
+//                       <div class="col">
+//                         <div class="form-outline">
+//                           <input type="text" id="form6Example2" class="form-control" />
+//                           <label class="form-label" for="form6Example2">Last name</label>
+//                         </div>
+//                       </div>
+//                     </div>
+                  
+//                     <!-- Text input -->
+//                     <div class="form-outline mb-4">
+                       
+                          
+//                           <div class="input-group">
+//                             <input type="text" class="form-control" aria-label="Text input with dropdown button">
+//                             <div class="input-group-append">
+                             
+//                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                              
+//                               <div class="dropdown-menu">
+//                                 <a class="dropdown-item" href="#">Action</a>
+//                                 <a class="dropdown-item" href="#">Another action</a>
+//                                 <a class="dropdown-item" href="#">Something else here</a>
+//                                 <div role="separator" class="dropdown-divider"></div>
+//                                 <a class="dropdown-item" href="#">Separated link</a>
+                               
+//                               </div>
+                              
+//                             </div>
+                      
+//                           </div>
+//                           <label class="form-label" for="form6Example3">Job type</label>
+//                     </div>
+                    
+
+//                     <div class="form-outline mb-4">
+//                         <input type="text" id="form6Example3" class="form-control" />
+//                         <label class="form-label" for="form6Example3">Job location</label>
+//                       </div>
+                  
+//                     <!-- Text input -->
+//                     <div class="form-outline mb-4">
+//                       <input type="text" id="form6Example4" class="form-control" />
+//                       <label class="form-label" for="form6Example4">Address</label>
+//                     </div>
+
+//                     <div class="form-outline mb-4">
+//                         <input type="text" id="form6Example4" class="form-control" />
+//                         <label class="form-label" for="form6Example4">Year of exprience</label>
+//                       </div>
+
+                      
+//                     <div class="form-outline mb-4">
+//                         <input type="text" id="form6Example4" class="form-control" />
+//                         <label class="form-label" for="form6Example4">Qualification</label>
+//                       </div>
+                  
+//                     <!-- Email input -->
+//                     <div class="form-outline mb-4">
+//                       <input type="email" id="form6Example5" class="form-control" />
+//                       <label class="form-label" for="form6Example5">Email</label>
+//                     </div>
+                  
+//                     <!-- Number input -->
+//                     <div class="form-outline mb-4">
+//                       <input type="number" id="form6Example6" class="form-control" />
+//                       <label class="form-label" for="form6Example6">Phone</label>
+//                     </div>
+                  
+//                     <!-- Message input -->
+//                     <div class="form-outline mb-4">
+//                       <textarea class="form-control" id="form6Example7" rows="4"></textarea>
+//                       <label class="form-label" for="form6Example7">Additional information</label>
+//                     </div>
+                  
+                    
+                  
+//                     <!-- Submit button -->
+//                     <button type="submit" class="btn btn-primary btn-block mb-4">Add Worker</button>
+//                     <button type="submit" class="btn btn-primary btn-block mb-4">back</button>
+//                   </form>
+
+//                     </div>
+//                   </div>
+//     </div>
+//     <script>
+//       //getting all attribute
+//       const form = document.querySelector("form"),
+//       eInput = form.querySelector(".input"),
+//       text = form.querySelector(".text");
+    
+//       form.addEventListener("submit", (e)=>{
+//         e.preventDefault(); //preventing form from submitting
+//         let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; //Regex pattern to validate email
+//         form.classList.add("error");
+//         form.classList.remove("valid");
+//         if(eInput.value == ""){
+//           text.innerText = "Email can't be blank";
+//         }else if (!eInput.value.match(pattern) ) { //if patter is not matched with user's enter value
+//           text.innerText = "Please enter a valid email";
+//         }else{
+//           form.classList.replace("error" , "valid"); //replacing error class with valid class
+//           text.innerText = "This is a valid email";
+//         }
+//       });
+//       </script>
+// </body>
+// </html>

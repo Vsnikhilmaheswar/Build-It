@@ -1,14 +1,37 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const date1Input = document.querySelector('input[name="date1"]');
+        const date2Input = document.querySelector('input[name="date2"]');
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        date1Input.addEventListener('change', updateSubmitButton);
+        date2Input.addEventListener('change', updateSubmitButton);
+
+        function updateSubmitButton() {
+            const date1 = new Date(date1Input.value);
+            const date2 = new Date(date2Input.value);
+            const today = new Date();
+
+            if (date1 < today || date1 >= date2) {
+                submitButton.disabled = true;
+                submitButton.style.opacity = 0.5;
+            } else {
+                submitButton.disabled = false;
+                submitButton.style.opacity = 1;
+            }
+        }
+    });
+</script>
+
 <section>
     <div class="container container-2">
         <hr>
-        <h1 class="heading" style="text-align: center; color: rgba(239, 151, 47, 1);;">Sravan construction manager</h1>
+        <h1 class="heading" style="text-align: center; color: rgba(239, 151, 47, 1);;"></h1>
         <hr>
         <!-- Centered div HTML -->
-        <h1 class="heading" style="text-align: center; color: rgba(239, 151, 47, 1);;">Electrician</h1>
+        <h1 class="heading" style="text-align: center; color: rgba(239, 151, 47, 1);;"></h1>
         <hr>
         <div class="container container-3">
-
-
             <div>
                 <div class="center-div">
                     <form action="/c/request/{{contractorId}}" method="post" enctype="multipart/form-data">
@@ -50,17 +73,12 @@
                             </label>
                         </div>
 
-
                         <br>
                     
-                    <button type="submit" class="btn" style="background-color: rgba(239, 151, 47, 1); ">Submit and
-                        pay</button>
-                    <button type="button" class="btn" style="background-color: rgba(239, 151, 47, 1);">Back</button>
-                </form>
+                        <button type="submit" class="btn" style="background-color: rgba(239, 151, 47, 1); ">Submit and pay</button>
+                        <button type="button" class="btn" style="background-color: rgba(239, 151, 47, 1);">Back</button>
+                    </form>
                 </div>
-
-                </body>
-
             </div>
         </div>
     </div>
