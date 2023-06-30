@@ -206,6 +206,15 @@ router.get('/orders',verifyLogin,async (req, res) => {
   res.render('user/orders', { orders,user: req.session.user })
 })
 
+
+router.get('/view-orderProduct/:id',async(req,res)=>{
+let product= await userHelper.viewOrderproducts(req.params.id)
+console.log("hekoo",product);
+
+res.render('user/view-orderProduct',{user:req.session.user,product})
+})
+
+
 router.post("/verifypayment", (req, res) => {
   console.log(req.body);
   userHelper.verifyPayment(req.body).then(()=>{
@@ -221,13 +230,14 @@ router.post("/verifypayment", (req, res) => {
 
 })
 
-router.get('/bricks', async(req, res) => {
-  let products = await userHelper.GetProduct("bricks")
+router.get('/product/:category', async(req, res) => {
+  const category = req.params.category;
+  let product = await userHelper.GetProduct(category)
   let cartCount = null
   if (req.session.user) {
     cartCount = await userHelper.getCartCount(req.session.user._id)
   }
-  res.render('user/bricks',{products,user:req.session.user,cartCount})});
+  res.render('user/product',{product,user:req.session.user,cartCount})});
 
 
 //admin creation temporary code

@@ -1,29 +1,62 @@
+{{!-- {{#each orders}}
+  <div class="order">
+    <h2>Order ID: {{_id}}</h2>
+    <p>Delivery Details:</p>
+    <ul>
+      <li>Mobile: {{deliveryDetails.mobile}}</li>
+      <li>Address: {{deliveryDetails.address}}</li>
+      <li>Pincode: {{deliveryDetails.pincode}}</li>
+    </ul>
+    <p>User ID: {{userId}}</p>
+    <p>Payment Method: {{PaymentMethod}}</p>
+    <p>Total Amount: {{totalAmount}}</p>
+    <p>Status: {{status}}</p>
+    <p>Date: {{date}}</p>
+
+    <p>Products:</p>
+    <ul>
+      {{#each products.products}}
+        <li>{{this.item}}</li>
+        <li>{{this.quantity}}</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/each}}
+
+ --}}
+
 <section>
   <div class="container">
-
+    <div class="col mt-4 mt-3">
+    </div>
     <table class="table mt-5">
 
       <thead>
         <tr>
-          <th scope="col">No.</th>
-          <th scope="col">title</th>
-          <th scope="col">category</th>
-          <th scope="col">description</th>
-          <th>image</th>
+          <th scope="col">Order Id</th>
+          <th scope="col">Delivery Address</th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Order status</th>
+          <th scope="col">Date of Order</th>
+          <th scope="col">Total Amount</th>
+          <th scope="col">Delivery Status</th>
         </tr>
       </thead>
       <tbody>
-        {{#each products}}
+      {{#each orders}}
         <tr>
-          <th scope="row">1</th>
-          <td>{{this.Name}}</td>
-          <td>{{this.category}}</td>
-          <td>{{this.description}}</td>
-          <td><img style="width:50px;height:50px" src="/images/{{this._id}}.jpg" alt=""></td>
+          <td>{{_id}}</td>
+          <td>{{deliveryDetails.address}} <br>{{deliveryDetails.mobile}}<br> {{deliveryDetails.pincode}}</td>
+          <td>{{PaymentMethod}}</td>
+          <td>{{status}}</td>
+         <td>{{date}}</td>
+         <td>{{totalAmount}}</td>
+          <td>{{deliveryStatus}}</td>
+        
           <td>
-            <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary">Edit</a>
-            <a href="/admin/delete-product/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are you want to delete {{this.Name}}')]">Delete</a>
+            <a href="/view-orderProduct/{{this._id}}" class="btn btn-primary">View Products</a>
           </td>
+         
         </tr>
         {{/each}}
       </tbody>
