@@ -5,5 +5,6 @@ module.exports={
     CART_COLLECTION:'cart',
     ORDER_COLLECTION:'order',
     CONTRACTOR_COLLLECTION:'contractor',
-    WORKER_COLLECTION:'worker'
+    WORKER_COLLECTION:'worker',
+    REQ_DETAILS_COLLECTION:'reqDetails'
 }

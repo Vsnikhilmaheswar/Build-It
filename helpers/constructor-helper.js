@@ -158,6 +158,19 @@ module.exports = {
         });
     });
   },
+  storereq: (requestData, callback) => {
+    db.get()
+      .collection(collection.REQ_DETAILS_COLLECTION)
+      .insertOne(requestData)
+      .then(() => {
+        callback(true); // Callback with true to indicate successful storing of request data
+      })
+      .catch((error) => {
+        console.error(error);
+        callback(false); // Callback with false to indicate an error occurred while storing request data
+      });
+  }
+
 
   
 }

@@ -72,9 +72,6 @@ router.post('/csignup', (req, res) => {
     });
 });
 
-
-
-
 router.post('/clogin', (req, res) => {
   constructorHelper.doCLogin(req.body).then((response) => {
     if (response.status) {
@@ -92,7 +89,7 @@ router.get('/viewmine', (req, res) => {
   const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
  
   constructorHelper.getMyWorker(contractorId).then((products) => {
-    res.render('contractors/viewmine', { products,    user:req.session.admin }); // Render the viewmine page with workers specific to the logged-in contractor
+    res.render('contractors/viewmine', { products, user: req.session.admin }); // Render the viewmine page with workers specific to the logged-in contractor
   });
 });
 
@@ -138,7 +135,7 @@ router.get('/contraProfile/:id', async (req, res) => {
     let user = req.session.user;
     const contractorId = req.params.id;
     const contractor = await constructorHelper.getContractorDetails(contractorId);
-    res.render('contractors/contraProfile', { contractor,user });
+    res.render('contractors/contraProfile', { contractor, user });
   } catch (error) {
     console.error(error);
     res.redirect('/error'); // Handle the error appropriately
@@ -149,13 +146,17 @@ router.get('/request/:id', (req, res) => {
   const contractorId = req.params.id;
   let user = req.session.user;
   const userId = req.session.user._id;  // Assuming the user ID is stored in the session as "userId"
-console.log("contractorId",contractorId);
-console.log("userId",userId);
-  res.render("contractors/getreq", { contractorId, userId,user }); // Pass contractorId and userId to the rendering template
+  console.log("contractorId", contractorId);
+  console.log("userId", userId);
+  res.render("contractors/getreq", { contractorId, userId, user }); // Pass contractorId and userId to the rendering template
 });
 
-router.post('/request', (req, res) => {
+router.post('/request/:id', (req, res) => {
   var requestData = req.body; // Get the request details data from the form
+  requestData.contractorId = req.params.id; // Add the contractorId to the request data
+  requestData.userId = req.session.user._id; // Add the userId to the request data
+  requestData.work = "not"; // Set the default value of "work" attribute to "not"
+  
   // Call the helper function to store the request data
   constructorHelper.storereq(requestData, (status) => {
     if (status) {
@@ -165,5 +166,5 @@ router.post('/request', (req, res) => {
     }
   });
 });
- 
+
 module.exports = router;
