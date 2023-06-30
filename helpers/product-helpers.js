@@ -87,7 +87,7 @@ module.exports = {
 
     getAllorder:()=>{
         return new Promise(async(resolve,reject)=>{
-            let users=await db.get().collection(collection.USER_COLLECTION).find().toArray()
+            let users=await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
             resolve(users)
         })
     }

@@ -90,8 +90,9 @@ router.post('/clogin', (req, res) => {
 
 router.get('/viewmine', (req, res) => {
   const contractorId = req.session.admin._id; // Get the logged-in contractor's _id from the session
+ 
   constructorHelper.getMyWorker(contractorId).then((products) => {
-    res.render('contractors/viewmine', { products }); // Render the viewmine page with workers specific to the logged-in contractor
+    res.render('contractors/viewmine', { products,    user:req.session.admin }); // Render the viewmine page with workers specific to the logged-in contractor
   });
 });
 

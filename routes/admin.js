@@ -77,12 +77,14 @@ router.get('/alluser', function (req, res) {
 router.get('/allorder', function (req, res) {
   let admin = req.session.admin
   producthelper.getAllorder().then((orders) => {
-  console.log(users)
-    res.render('admin/alluser', { orders,admin })
+  console.log(orders)
+    res.render('admin/allorder', { orders,admin })
   })
 })
 
-
+router.post('/update-delivery-status',function(req,res){
+  
+})
 router.get('/add-product',async function (req, res) {
   category=await producthelper.getcategories()
   res.render('admin/add-product',{ admin : req.session.admin,category})
@@ -108,12 +110,12 @@ router.post('/add-product', (req, res) => {
 
 
 
-router.get('/delete-product/:id',verifyLogin,(req,res) => {
+router.get('/delete-product/:id',(req,res) => {
   var proId = req.params.id
   let admin = req.session.admin
   console.log(proId);
   productHelpers.delectProduct(proId).then((response) => {
-    res.redirect('/admin/dashboard',{admin})
+    res.redirect('/admin/dashboard',)
   })
 })
 

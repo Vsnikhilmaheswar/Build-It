@@ -12,6 +12,11 @@ var app = express();
 var fileUpload = require('express-fileupload');
 
 var db = require('./config/connection')
+const Handlebars = require('handlebars');
+
+Handlebars.registerHelper('eq', function (a, b) {
+  return a === b;
+});
 
 var session = require('express-session')
 // view engine setup

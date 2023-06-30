@@ -2,10 +2,10 @@
  <div class="container">
       <form class="form form--signup framed" action="/signup" method="POST">
         <h1 class="text text--centered text--omega">Build It</h1>
-        <input type="text" placeholder="Full Name" class="input input--top" name="Fname"/>
-        <input type="text" placeholder="username" class="input" name="username" />
-        <input type="email" placeholder="Email" class="input "  name="email" />
-        <input type="password" placeholder="Password" class="input"  name="Password" />
+        <input type="text" placeholder="Full Name" class="input input--top" name="Fname" required/>
+        <input type="text" placeholder="username" class="input" name="username" required/>
+        <input type="email" placeholder="Email" class="input "  name="email" required/>
+        <input type="password" placeholder="Password" class="input"  name="Password"  pattern=".{8,}" required/>
         <input type="text"  class="input"  name="bio" value="" hidden />
         <input type="text" class="input" name="phone" value="" hidden/>
         <input type="date"  name="dob" value="" hidden/>
