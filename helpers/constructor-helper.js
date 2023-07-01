@@ -186,12 +186,11 @@ module.exports = {
   },
   updateRequestStatus: (requestId, status) => {
     return new Promise((resolve, reject) => {
-      const updateValue = status === 'accept' ? 'accepted' : 'rejected';
-
+     
       db.get().collection(collection.REQ_DETAILS_COLLECTION)
         .updateOne(
-          { _id: ObjectID(requestId) },
-          { $set: { work: updateValue } }
+          { _id: objectId(requestId) },
+          { $set: { work: status.work } }
         )
         .then(() => {
           resolve();

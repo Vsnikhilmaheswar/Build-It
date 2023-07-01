@@ -88,10 +88,12 @@
                         <p>Approved?: {{work}}</p>
 
                         <form action="/c/accept-request/{{_id}}" method="POST" enctype="multipart/form-data">
+                        <input type="text" name="work" value="accepted" hidden>
                             <button class="btn btn-primary" type="submit">Accept</button>
                         </form>
                         <hr>
                         <form action="/c/deny-request/{{_id}}" method="POST">
+                        <input type="text" name="work" value="denied" hidden>
                             <button class="btn btn-primary" type="submit">Deny</button>
                         </form>
                     </div>
