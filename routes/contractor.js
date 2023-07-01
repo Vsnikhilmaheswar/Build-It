@@ -195,6 +195,7 @@ router.post('/c/accept-request/:id', (req, res) => {
 });
 
 router.post('/c/deny-request/:id', (req, res) => {
+  console.log("hello")
   const requestId = req.params.id;
 
   // Update the value of 'work' attribute to 'denied' in the database
