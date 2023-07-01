@@ -186,7 +186,7 @@ console.log(req.body);
   // Update the value of 'work' attribute to 'accepted' in the database
   constructorHelper.updateRequestStatus(requestId, req.body)
     .then(() => {
-      res.redirect('/c/viewUserRequest'); // Redirect back to the viewrequests page after updating the status
+      res.redirect('/c/viewwork'); // Redirect back to the viewrequests page after updating the status
     })
 });
 
@@ -197,7 +197,7 @@ console.log(req.body);
   // Update the value of 'work' attribute to 'accepted' in the database
   constructorHelper.updateRequestStatus(requestId, req.body)
     .then(() => {
-      res.redirect('/c/viewUserRequest'); // Redirect back to the viewrequests page after updating the status
+      res.redirect('/c/viewwork'); // Redirect back to the viewrequests page after updating the status
     })
 });
 

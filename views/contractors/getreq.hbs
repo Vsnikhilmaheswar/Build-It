@@ -38,7 +38,7 @@
                         <p> <br></p>
                         <p>Select number of workers</p>
                         <div class="form-outline mb-4">
-                            <input type="number" id="form6Example6" class="form-control" name="noOfWorkers" />
+                            <input type="number" id="form6Example6" class="form-control" name="noOfWorkers" required />
                         </div>
                         <p>Select the starting date</p>
                         <label class="one">
@@ -52,24 +52,24 @@
                         <label>Address</label>
                         <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" name="address"
-                                id="floatingTextarea"></textarea>
+                                id="floatingTextarea" required></textarea>
                             <label for="floatingTextarea"></label>
                         </div>
                          <label>work prefferded</label>
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" name="work_preffered"
+                            <textarea class="form-control" placeholder="Leave a comment here" name="work_preffered" 
                                 id="floatingTextarea"></textarea>
                             <label for="floatingTextarea"></label>
                         </div>
                         <br>
 
-                        <div class="form-check">
+                        {{!-- <div class="form-check">
                             <input class="form-check-input" type="radio" name="payment" id="onlinePayment"
-                                value="online payment" style="border: rgba(239, 151, 47, 1) solid; background-color:">
+                                value="online payment" style="border: rgba(239, 151, 47, 1) solid; background-color:" required>
                             <label class="form-check-label" for="onlinePayment">
                                 <p>Online payment</p>
                             </label>
-                        </div>
+                        </div> --}}
                         <br>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="payment" id="onsitePayment"
