@@ -27,18 +27,15 @@
           <td>{{status}}</td>
          <td>{{date}}</td>
          <td>{{totalAmount}}</td>
-  <td>
-            <select class="form-control" onchange="updateDeliveryStatus('{{this._id}}', this.value)">
-              <option value="Pending" {{#ifCond deliveryStatus '===' 'Pending'}}selected{{/ifCond}}>Pending</option>
-              <option value="In Transit" {{#ifCond deliveryStatus '===' 'In Transit'}}selected{{/ifCond}}>In Transit</option>
-              <option value="Delivered" {{#ifCond deliveryStatus '===' 'Delivered'}}selected{{/ifCond}}>Delivered</option>
-            </select>
-          </td>
+<td>
+{{deliveryStatus}}
+</td>
+
 
           
-          <td>
+          {{!-- <td>
             <a href="/view-orderProduct/{{this._id}}" class="btn btn-primary">View Products</a>
-          </td>
+          </td> --}}
          
         </tr>
         {{/each}}
@@ -47,24 +44,26 @@
   </div>
 </section>
 <script>
-  function updateDeliveryStatus(orderId, deliveryStatus) {
-    // Send an AJAX request to update the delivery status in the database
-    // Here's an example using jQuery AJAX:
+  function changeDeliveryStatus(Orderid,NewStatus) {
+   
+
     $.ajax({
-      type: 'POST',
-      url: '/update-delivery-status', // Replace with the actual endpoint to update the delivery status in your backend
+      url: '/change-order-status/',
       data: {
-        orderId: orderId,
-        deliveryStatus: deliveryStatus
+        orderid: Orderid,
+        newStatus:NewStatus 
       },
-      success: function(response) {
-        // Update the delivery status in the table after successful update in the database
-        // You can update the status in the table dynamically using JavaScript/jQuery
-      },
-      error: function(error) {
-        // Handle any errors that occur during the AJAX request
+      method: 'post',
+      success: (response) => {
+         if (response.success) {
+            console.log('Delivery status updated successfully');
+          } else {
+            console.error('Failed to update delivery status');
+          }
       }
-    });
+    }
+    )
   }
 </script>
+
 

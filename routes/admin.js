@@ -82,9 +82,28 @@ router.get('/allorder', function (req, res) {
   })
 })
 
-router.post('/update-delivery-status',function(req,res){
-  
-})
+// Assuming you have an instance of Express called 'app'
+
+router.put('/update-delivery-status/:orderId', (req, res) => {
+  const orderId = req.params.orderId;
+  const newStatus = req.body.deliveryStatus;
+
+  // Assuming you have access to your database and its corresponding collection
+  db.get().collection('order').updateOne(
+    { _id: ObjectId(orderId) },
+    { $set: { deliveryStatus: newStatus } },
+    (err, result) => {
+      if (err) {
+        console.error('Error occurred during delivery status update:', err);
+        res.json({ success: false });
+      } else {
+        console.log('Delivery status updated successfully');
+        res.json({ success: true });
+      }
+    }
+  );
+});
+
 router.get('/add-product',async function (req, res) {
   category=await producthelper.getcategories()
   res.render('admin/add-product',{ admin : req.session.admin,category})
