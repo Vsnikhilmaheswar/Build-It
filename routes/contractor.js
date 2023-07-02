@@ -59,7 +59,7 @@ router.post('/csignup', (req, res) => {
       req.session.user.loggedIn = true;
       constructorHelper.getContractorDetails(contractorId) // Retrieve the contractor details
         .then((contractor) => {
-          res.redirect(`/c/viewworker/${contractorId}`);
+          res.redirect("/c");
         })
         .catch((error) => {
           console.log(error);
