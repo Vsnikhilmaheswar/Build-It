@@ -50,8 +50,6 @@ router.get('/addCategory',verifyLogin,(req,res)=>{
 
 router.post('/addCategory',verifyLogin,(req,res)=>{
   let admin =  req.session.admin
-
-
   producthelper.addcategory(req.body, (id) => {
     let image = req.files.Image
     console.log(id)
@@ -63,7 +61,6 @@ router.post('/addCategory',verifyLogin,(req,res)=>{
       }
     })
   })
-
 })
 
 router.get('/alluser', function (req, res) {
@@ -159,7 +156,12 @@ router.post('/edit-product/:id',(req,res)=>{
     }
   })
 })
-
+router.get('/logout', (req, res) => {
+  req.session.admin=null
+  res.render('admin/login')
+  req.session.admin = false
+ 
+})
 
 router.get('/Adminsignup', (req, res) => {
   res.render('admin/Adminsignup')
