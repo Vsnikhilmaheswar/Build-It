@@ -12,7 +12,9 @@
                             <option value="{{this.category}}" name="category" >{{this.category}}</option>
                         {{/each}}
                     </select>
-                    <label for="price">Price</label>
+                    <label for="quantity">quantity</label>
+                    <input type="number" class="form-control" name="quantity" required>
+                    <label for="price" >Price</label>
                     <input type="text" name="price" class="form-control"  pattern="[0-9]*" inputmode="numeric" required>
                     <label for="description">Description</label>
                     <input type="text" name="description" class="form-control"  required>

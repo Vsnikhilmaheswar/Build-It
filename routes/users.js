@@ -152,9 +152,9 @@ router.get('/cart', verifyLogin, async (req, res) => {
 router.get('/add-to-cart/:id', (req, res) => {
   if (req.session.user) {
   userHelper.addToCart(req.params.id, req.session.user._id).then(() => {
-   
     res.json({ 'status': true })
   })
+  
 }else{
    //res.redirect('/');
   res.json({ 'status': false })
