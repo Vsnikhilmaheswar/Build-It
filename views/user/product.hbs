@@ -9,8 +9,9 @@
             <div class="card-body">
               <h5 class="card-title">{{this.Name}}</h5>
               <p class="card-text">{{this.description}}</p>
+             <input type="number">
                 <p class="card-text">RS.{{this.price}}.</p>
-                        <button onclick="AddToCart('{{this._id}}')" class="btn btn-primary" > ADD TO Cart </button>
+                 <button onclick="AddToCart('{{this._id}}')" class="btn btn-primary" > ADD TO Cart </button>
             </div>
           </div>
         </div>
@@ -44,3 +45,29 @@
             {{/each}}
         </div>
     </div> --}}
+<script>
+
+      function AddToCart(proId) {
+      
+        $.ajax({
+          url: '/add-to-cart/' + proId,
+          method: 'GET',
+          success: function (response) {
+            console.log(" ajax=>>>>" + response);
+            
+            if (response.status) {
+              let count = $('#cart-count').html()
+              count = parseInt(count) + 1
+              $("#cart-count").html(count)
+            } else {
+              alert("please login first")
+            }
+            
+          }
+
+        })
+      }
+
+
+
+    </script>

@@ -103,9 +103,10 @@ GetProduct:(category)=>{
   },
 
 
-
-
   addToCart: (proId, userId) => {
+
+  
+  
     let proObj = {
       item: objectId(proId),
       quantity: 1
@@ -145,7 +146,8 @@ GetProduct:(category)=>{
         })
       }
     })
-  },
+  }
+,
   getCartProducts: (userId) => {
     return new Promise(async (resolve, reject) => {
       let cartItems = await db.get().collection(collection.CART_COLLECTION).aggregate([
