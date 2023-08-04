@@ -184,13 +184,12 @@ module.exports = {
         });
     });
   },
-  updateRequestStatus: (requestId, status) => {
+  updateRequestStatus: (requestId, newStatus) => {
     return new Promise((resolve, reject) => {
-     
       db.get().collection(collection.REQ_DETAILS_COLLECTION)
         .updateOne(
           { _id: objectId(requestId) },
-          { $set: { work: status.work } }
+          { $set: newStatus } // Use the newStatus to update the request in the database
         )
         .then(() => {
           resolve();
@@ -199,5 +198,6 @@ module.exports = {
           reject(error);
         });
     });
-  } 
+  },
+   
 }

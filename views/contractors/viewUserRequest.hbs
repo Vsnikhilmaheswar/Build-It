@@ -26,45 +26,13 @@
 </head>
 <body>
     <div style="display: flex; justify-content: center; align-items: center;"></div>
-<section>
-<div class="container" style="background-color:white;">
-    <div class="row" style="margin: 20px;">
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card">
-                <div class="card-body" style="margin-top: 10px;">
-                    <a href="/c/viewUserRequest" class="stretched-link"
-                        style="text-decoration: none; color: rgba(239, 151, 47, 1);">
-                        <h3 class="card-title text-center">Request</h3>
-                        <p class="card-text"></p>
-                    </a>
-                </div>
+    <section>
+        <div class="container" style="background-color:white;">
+            <div class="row" style="margin: 20px;">
+                <!-- Your existing code for displaying the requests -->
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card">
-                <div class="card-body" style="margin-top: 10px;">
-                    <a href="/c/viewworker" class="stretched-link"
-                        style="text-decoration: none; color: rgba(239, 151, 47, 1);">
-                        <h3 class="card-title text-center">View Worker</h3>
-                        <p class="card-text"></p>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card">
-                <div class="card-body" style="margin-top: 10px;">
-                    <a href="/c/viewmine" class="stretched-link"
-                        style="text-decoration: none; color: rgba(239, 151, 47, 1);">
-                        <h3 class="card-title text-center">View Work</h3>
-                        <p class="card-text"></p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-</div>
+    </section>
 
     <div style="display: flex; justify-content: center; align-items: center;">
         <section>
@@ -87,14 +55,17 @@
                         <hr>
                         <p>Approved?: {{work}}</p>
 
-                        <form action="/c/accept-request/{{_id}}" method="POST" enctype="multipart/form-data">
-                        <input type="text" name="work" value="accepted" hidden>
-                            <button class="btn btn-primary" type="submit">Accept</button>
+                        <!-- Update the Accept form -->
+                        <form id="acceptForm" action="/c/accept-request/{{_id}}" method="POST" enctype="multipart/form-data">
+                            <input type="text" name="work" value="accepted" hidden>
+                            <button class="btn btn-primary" type="submit" onclick="submitForm('acceptForm')">Accept</button>
                         </form>
                         <hr>
-                        <form action="/c/deny-request/{{_id}}" method="POST">
-                        <input type="text" name="work" value="denied" hidden>
-                            <button class="btn btn-primary" type="submit">Deny</button>
+
+                        <!-- Update the Deny form -->
+                        <form id="denyForm" action="/c/deny-request/{{_id}}" method="POST">
+                            <input type="text" name="work" value="denied" hidden>
+                            <button class="btn btn-primary" type="submit" onclick="submitForm('denyForm')">Deny</button>
                         </form>
                     </div>
                 </div>
@@ -113,7 +84,26 @@
                 modals[index].style.display = 'block';
             });
         });
+
+        // Function to submit the form
+        function submitForm(formId) {
+            const form = document.getElementById(formId);
+            form.submit();
+            reloadModal(); // Reload the modal after form submission
+        }
+
+        // Function to reload the modal after form submission
+        function reloadModal() {
+            const modal = document.querySelector('.modal');
+
+            // Hide the modal
+            modal.style.display = 'none';
+
+            // Show the modal again after a short delay to see the updated status
+            setTimeout(() => {
+                modal.style.display = 'block';
+            }, 1000); // Adjust the delay time as needed
+        }
     </script>
-</div>
 </body>
 </html>

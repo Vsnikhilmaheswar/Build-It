@@ -179,27 +179,34 @@ router.get('/viewUserRequest', (req, res) => {
     });
 });
 
+// Update the value of 'work' attribute to 'accepted' in the database
 router.post('/accept-request/:id', (req, res) => {
   const requestId = req.params.id;
-  console.log(requestId)
-console.log(req.body);
-  // Update the value of 'work' attribute to 'accepted' in the database
-  constructorHelper.updateRequestStatus(requestId, req.body)
+  const newStatus = { work: 'accepted' }; // New status to update the 'work' attribute
+  constructorHelper.updateRequestStatus(requestId, newStatus)
     .then(() => {
-      res.redirect('/c/viewwork'); // Redirect back to the viewrequests page after updating the status
+      res.redirect('/c/viewUserRequest'); // Redirect back to the viewrequests page after updating the status
     })
+    .catch((error) => {
+      console.error(error);
+      res.redirect('/error'); // Handle the error appropriately if necessary
+    });
 });
 
-router.post('/c/deny-request/:id', (req, res) => {
+// Update the value of 'work' attribute to 'denied' in the database
+router.post('/deny-request/:id', (req, res) => {
   const requestId = req.params.id;
-  console.log(requestId)
-console.log(req.body);
-  // Update the value of 'work' attribute to 'accepted' in the database
-  constructorHelper.updateRequestStatus(requestId, req.body)
+  const newStatus = { work: 'denied' }; // New status to update the 'work' attribute
+  constructorHelper.updateRequestStatus(requestId, newStatus)
     .then(() => {
-      res.redirect('/c/viewwork'); // Redirect back to the viewrequests page after updating the status
+      res.redirect('/c/viewUserRequest'); // Redirect back to the viewrequests page after updating the status
     })
+    .catch((error) => {
+      console.error(error);
+      res.redirect('/error'); // Handle the error appropriately if necessary
+    });
 });
+
 
 
 
